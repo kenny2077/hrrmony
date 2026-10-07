@@ -37,6 +37,7 @@ class Voice:
     index_file: str
     description: str
     source_url: str
+    revision: str  # pinned commit: model files are pickles, never follow a moving branch
 
 
 VOICES: dict[str, Voice] = {
@@ -48,6 +49,7 @@ VOICES: dict[str, Voice] = {
         description="Community Minecraft villager RVC v2 model; closest match to the reference "
         "'AI generated' villager covers (see docs/how-it-works.md).",
         source_url="https://huggingface.co/r3gm/villager",
+        revision="8db3b84dca04b46dec60b9d22fb2a66eed87d9b5",
     ),
 }
 DEFAULT_VOICE = "villager"
@@ -56,3 +58,18 @@ DEFAULT_VOICE = "villager"
 # third off the backing track's key); -12 keeps the vocal in key.
 SHIFT_PRESETS = {"classic": -8, "in-key": -12}
 DEFAULT_SHIFT = SHIFT_PRESETS["classic"]
+MAX_SHIFT = 24
+
+
+def parse_shift(value: str | int) -> int:
+    """'classic' / 'in-key' or an integer number of semitones within +-MAX_SHIFT."""
+    if isinstance(value, str) and value in SHIFT_PRESETS:
+        return SHIFT_PRESETS[value]
+    try:
+        semis = int(value)
+    except (TypeError, ValueError):
+        names = ", ".join(SHIFT_PRESETS)
+        raise ValueError(f"shift must be one of {names} or a number of semitones") from None
+    if not -MAX_SHIFT <= semis <= MAX_SHIFT:
+        raise ValueError(f"shift must be between -{MAX_SHIFT} and {MAX_SHIFT} semitones")
+    return semis

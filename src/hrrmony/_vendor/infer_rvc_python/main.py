@@ -245,7 +245,7 @@ def load_trained_model(model_path, config):
         raise ValueError("No model found")
 
     logger.info("Loading %s" % model_path)
-    cpt = torch.load(model_path, map_location="cpu")
+    cpt = torch.load(model_path, map_location="cpu", weights_only=True)  # vendored change
     if not isinstance(cpt, dict) or "config" not in cpt:
         raise ValueError(
             f"The file '{model_path}' is not a valid RVC model. Missing 'config' dictionary in checkpoint."

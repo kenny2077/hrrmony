@@ -21,7 +21,10 @@ log = logging.getLogger(__name__)
 # Conversion settings matched to the reference covers (others barely mattered in the sweep).
 RVC_SETTINGS = dict(pitch_algo="rmvpe", index_influence=0.75, respiration_median_filtering=3,
                     envelope_ratio=0.25, consonant_breath_protection=0.33)
+# Pinned commits for everything we load (RVC/RMVPE checkpoints are PyTorch pickles).
 RMVPE_REPO, RMVPE_FILE = "r3gm/sonitranslate_voice_models", "rmvpe.pt"
+RMVPE_REVISION = "cbe63a1ea0a4eab00a983c54c4784c1bd9d084c8"
+HUBERT_REPO, HUBERT_REVISION = "r3gm/hubert_base", "10ca3ff6e99b8cc6932753989bda20bd4674644e"
 
 
 def voice_files(voice: str | Voice = DEFAULT_VOICE) -> tuple[Path, Path]:
@@ -30,22 +33,42 @@ def voice_files(voice: str | Voice = DEFAULT_VOICE) -> tuple[Path, Path]:
 
     v = VOICES[voice] if isinstance(voice, str) else voice
     target = models_dir() / "voices" / v.name
-    model = hf_hub_download(v.repo, v.model_file, local_dir=target)
-    index = hf_hub_download(v.repo, v.index_file, local_dir=target)
+    model_p, index_p = target / v.model_file, target / v.index_file
+    if model_p.exists() and index_p.exists():  # revisions are pinned: a local copy is final
+        return model_p, index_p
+    model = hf_hub_download(v.repo, v.model_file, revision=v.revision, local_dir=target)
+    index = hf_hub_download(v.repo, v.index_file, revision=v.revision, local_dir=target)
     return Path(model), Path(index)
 
 
 def rmvpe_file() -> Path:
     from huggingface_hub import hf_hub_download
 
-    return Path(hf_hub_download(RMVPE_REPO, RMVPE_FILE, local_dir=models_dir() / "pitch"))
+    local = models_dir() / "pitch" / RMVPE_FILE
+    if local.exists():
+        return local
+    return Path(hf_hub_download(RMVPE_REPO, RMVPE_FILE, revision=RMVPE_REVISION,
+                                local_dir=models_dir() / "pitch"))
+
+
+def hubert_dir() -> Path:
+    """HuBERT content encoder (safetensors), pinned and cached next to the other models."""
+    from huggingface_hub import snapshot_download
+
+    local = models_dir() / "hubert"
+    if (local / "config.json").exists() and any(local.glob("*.safetensors")):
+        return local
+    return Path(snapshot_download(HUBERT_REPO, revision=HUBERT_REVISION,
+                                  allow_patterns=["config.json", "*.safetensors"],
+                                  local_dir=models_dir() / "hubert"))
 
 
 @lru_cache(maxsize=1)
 def _converter(device: str):
     from ._vendor.infer_rvc_python.main import BaseLoader
 
-    return BaseLoader(only_cpu=(device == "cpu"), hubert_path=None, rmvpe_path=str(rmvpe_file()))
+    return BaseLoader(only_cpu=(device == "cpu"), hubert_path=str(hubert_dir()),
+                      rmvpe_path=str(rmvpe_file()))
 
 
 def convert(vocal: np.ndarray, shift: int, voice: str = DEFAULT_VOICE, device: str = "auto") -> np.ndarray:

@@ -5,3 +5,5 @@
 Local changes:
 - imports rewritten to `hrrmony._vendor.infer_rvc_python`
 - `torchcrepe` is imported lazily, only when the `crepe` pitch method is used (hrrmony uses `rmvpe`)
+- `torch.load(..., weights_only=True)` for RVC and RMVPE checkpoints, so a tampered checkpoint can't run code
+  even on torch < 2.6 (where the default was unsafe)
