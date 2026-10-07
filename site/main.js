@@ -301,8 +301,8 @@
     const color = getComputedStyle(span).color;
     const r = el.getBoundingClientRect();
     if (!r.width || !r.height) return;
-    let cv = $("canvas", el);
-    if (!cv) { cv = document.createElement("canvas"); cv.setAttribute("aria-hidden", "true"); el.appendChild(cv); }
+    let cv = $("canvas.glyph-cv", el);
+    if (!cv) { cv = document.createElement("canvas"); cv.className = "glyph-cv"; cv.setAttribute("aria-hidden", "true"); el.prepend(cv); }
     const rowsOf = (ch) => (FONT[ch] || FONT[" "]).split(" ");
     const widths = [...text].map((ch) => rowsOf(ch)[0].length);
     const gw = widths.reduce((a, b) => a + b, 0) + widths.length - 1, gh = 7;
@@ -450,6 +450,88 @@
     A.villager.addEventListener("loadedmetadata", progress);
     setVoice("villager");
     drawViz(); addEventListener("resize", drawViz);
+  }
+
+  /* ---------------------------------------------------------------- cursor: block heat + flashlight
+     As on auroraforgelab.com: on fine pointers the cursor warms the pixel blocks it passes over
+     (five quantised amber steps, so the trail stays pixelated) and lights a soft flashlight on
+     cards. Off on touch screens and under reduced motion. */
+  const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const HEAT = [[255, 122, 42], [255, 196, 107]]; // ember to glow, like a torch
+  const layers = [];
+  function heatLayer(host, { cell = 16, radius = 3, decay = .88, seam = 3 } = {}) {
+    const cv = document.createElement("canvas");
+    cv.className = "heat"; cv.setAttribute("aria-hidden", "true");
+    host.appendChild(cv);
+    const L = { host, cv, ctx: cv.getContext("2d"), cell, radius, decay, seam, cols: 0, rows: 0, heat: new Float32Array(0), hot: false };
+    L.resize = () => {
+      const r = host.getBoundingClientRect();
+      cv.width = Math.round(r.width * DPR); cv.height = Math.round(r.height * DPR);
+      L.cols = Math.ceil(r.width / cell); L.rows = Math.ceil(r.height / cell);
+      L.heat = new Float32Array(L.cols * L.rows);
+    };
+    L.stamp = (e) => {
+      const r = host.getBoundingClientRect();
+      const cx = (e.clientX - r.left) / cell, cy = (e.clientY - r.top) / cell;
+      if (cx < -radius || cy < -radius || cx > L.cols + radius || cy > L.rows + radius) return;
+      for (let y = Math.max(0, Math.floor(cy - radius)); y <= Math.min(L.rows - 1, Math.ceil(cy + radius)); y++) {
+        for (let x = Math.max(0, Math.floor(cx - radius)); x <= Math.min(L.cols - 1, Math.ceil(cx + radius)); x++) {
+          const d = Math.hypot(x + .5 - cx, y + .5 - cy) / radius;
+          if (d >= 1) continue;
+          const i = y * L.cols + x;
+          L.heat[i] = Math.max(L.heat[i], 1 - d * d * .9);
+        }
+      }
+      L.hot = true; wake();
+    };
+    L.frame = () => {
+      const { ctx, heat } = L;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      let hot = false;
+      for (let i = 0; i < heat.length; i++) {
+        const h = heat[i];
+        if (h <= 0) continue;
+        heat[i] = h < .08 ? 0 : h * decay; hot = true;
+        if (h <= .38) continue;
+        const q = Math.ceil(h * 5) / 5, k = .55 + q * .4;
+        const c = HEAT[0].map((v, j) => v + (HEAT[1][j] - v) * q);
+        ctx.fillStyle = `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${k * .78})`;
+        const x = i % L.cols, y = (i / L.cols) | 0;
+        ctx.fillRect(x * cell, y * cell, cell - seam, cell - seam);
+      }
+      L.hot = hot;
+      return hot;
+    };
+    L.resize(); layers.push(L);
+    return L;
+  }
+  let heatRaf = 0;
+  function wake() {
+    if (heatRaf) return;
+    const step = () => {
+      let busy = false;
+      for (const L of layers) if (L.hot) busy = L.frame() || busy;
+      heatRaf = busy ? requestAnimationFrame(step) : 0;
+    };
+    heatRaf = requestAnimationFrame(step);
+  }
+  if (FINE && !reduce) {
+    const hero = $(".hero");
+    if (hero) heatLayer(hero, { cell: 16, radius: 3, decay: .88, seam: 2 });
+    $$(".card-media").forEach((m) => heatLayer(m, { cell: 16, radius: 2.4, decay: .9, seam: 1 }));
+    const player = $(".player"); if (player) heatLayer(player, { cell: 12, radius: 2.2, decay: .9 });
+    const cta = $(".cta"); if (cta) heatLayer(cta, { cell: 16, radius: 2.6, decay: .9, seam: 2 });
+    const mark = $(".glyph-wordmark"); if (mark) heatLayer(mark, { cell: 12, radius: 2.2, decay: .9 });
+    document.addEventListener("pointermove", (e) => {
+      for (const L of layers) L.stamp(e);
+      const surface = e.target.closest?.(".glow");
+      if (!surface) return;
+      const r = surface.getBoundingClientRect();
+      surface.style.setProperty("--mx", `${e.clientX - r.left}px`);
+      surface.style.setProperty("--my", `${e.clientY - r.top}px`);
+    }, { passive: true });
+    let rh; addEventListener("resize", () => { clearTimeout(rh); rh = setTimeout(() => layers.forEach((L) => L.resize()), 150); });
   }
 
   /* ---------------------------------------------------------------- copy buttons */
