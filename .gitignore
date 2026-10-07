@@ -21,3 +21,6 @@ out/
 work/
 input/
 .DS_Store
+
+# product page demo audio is generated from public-domain material and is allowed
+!site/assets/*.mp3

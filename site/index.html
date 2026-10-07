@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Villager Sound — every song, sung by a villager</title>
+<meta name="description" content="Villager Sound turns any song into a Minecraft villager cover on your own machine. Best 30 seconds or the whole song, free and open source. An Aurora Forge Lab product.">
+<meta name="theme-color" content="#050c1a">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="Villager Sound — every song, sung by a villager">
+<meta property="og:description" content="Turn any song into a Minecraft villager cover, locally. Free and open source.">
+<meta property="og:image" content="assets/screenshot.jpg">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.replace("no-js", "js")</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" id="top">
+  <a class="brand" href="#top" aria-label="Villager Sound, back to top">
+    <svg class="brand-mark" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="1" y="1" width="10" height="5" fill="#b07a52"/><rect x="1" y="1" width="10" height="1" fill="#5b3a26"/>
+      <rect x="3" y="3" width="2" height="1" fill="#eaf2f8"/><rect x="4" y="3" width="1" height="1" fill="#4fe3d0"/>
+      <rect x="7" y="3" width="2" height="1" fill="#eaf2f8"/><rect x="7" y="3" width="1" height="1" fill="#4fe3d0"/>
+      <rect x="5" y="4" width="2" height="5" fill="#8a5a3c"/><rect x="2" y="6" width="8" height="5" fill="#6e4a33"/>
+      <rect x="4" y="9" width="4" height="1" fill="#3d2618"/>
+    </svg>
+    <span class="brand-text">Villager Sound</span>
+  </a>
+  <nav class="nav-links" aria-label="Sections">
+    <a href="#listen">Listen</a>
+    <a href="#features">Features</a>
+    <a href="#install">Install</a>
+  </nav>
+  <a class="button button-ghost button-small nav-cta" href="https://github.com/kenny2077/villager-sound">GitHub <span aria-hidden="true">↗</span></a>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <canvas class="sky" id="sky" aria-hidden="true"></canvas>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="kicker">Aurora Forge Lab <span>/ Free and open source</span></p>
+        <h1 id="hero-title">Every song, sung by a villager.</h1>
+        <p class="lede">Villager Sound pulls the vocal out of any track, re-sings it in the voice of a Minecraft
+          villager and lays it back over the original music. It runs on your own machine, so your music
+          never leaves it.</p>
+        <div class="actions">
+          <a class="button button-primary" href="#install">Install Villager Sound</a>
+          <a class="button button-ghost" href="#listen">Hear the demo</a>
+        </div>
+      </div>
+
+      <nav class="lab-index" aria-label="What it does">
+        <div class="lab-index-head"><span>Spec sheet</span><span>v0.1.0</span></div>
+        <ol>
+          <li><a href="#feature-hook"><span class="ix">01</span><span class="ix-name">Best 30 seconds</span><span class="ix-status">Finds the chorus for you</span></a></li>
+          <li><a href="#feature-full"><span class="ix">02</span><span class="ix-name">Whole song</span><span class="ix-status">About a minute on a laptop GPU</span></a></li>
+          <li><a href="#feature-app"><span class="ix">03</span><span class="ix-name">Web app and CLI</span><span class="ix-status">Upload, listen, download</span></a></li>
+          <li><a href="#feature-measured"><span class="ix">04</span><span class="ix-name">Measured sound</span><span class="ix-status">Matched to the viral covers</span></a></li>
+          <li><a href="#install"><span class="ix">05</span><span class="ix-name">Runs offline</span><span class="ix-status">After a one-time model download</span></a></li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <section class="statement" aria-label="What makes it sound right">
+    <div class="pin">
+      <p>The viral villager covers aren’t sound clips glued onto notes. They’re the singer,
+        <em>re-voiced</em>. So the phrasing stays human, every consonant <em>lands like a villager taking a hit</em>,
+        and the song is still the song.</p>
+    </div>
+  </section>
+
+  <section class="listen" id="listen" aria-labelledby="listen-title">
+    <header class="section-head">
+      <p class="kicker">Listen <span>/ Public-domain demo</span></p>
+      <h2 id="listen-title">Same song. One villager.</h2>
+      <p class="sub">“Happy Birthday” with a synthetic singer, then the same take through Villager Sound.
+        Switch voices while it plays; the music keeps going.</p>
+    </header>
+
+    <div class="player" id="player">
+      <canvas class="viz" id="viz" aria-hidden="true"></canvas>
+      <div class="player-bar">
+        <button class="play" id="play" type="button" aria-label="Play">
+          <svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><path class="i-play" d="M2 1h2v1h2v1h2v4H6v1H4v1H2z"/><path class="i-pause" d="M2 1h2v8H2zM6 1h2v8H6z"/></svg>
+        </button>
+        <div class="ab" role="radiogroup" aria-label="Voice">
+          <label><input type="radio" name="voice" value="villager" checked><span>Villager</span></label>
+          <label><input type="radio" name="voice" value="original"><span>Original singer</span></label>
+        </div>
+        <div class="seek" id="seek" role="slider" tabindex="0" aria-label="Position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="seek-fill"></i></div>
+        <span class="time" id="time">0:00</span>
+      </div>
+      <audio id="a-villager" src="assets/demo-villager.mp3" preload="auto"></audio>
+      <audio id="a-original" src="assets/demo-original.mp3" preload="auto"></audio>
+    </div>
+  </section>
+
+  <section class="features" id="features" aria-labelledby="features-title">
+    <header class="section-head">
+      <p class="kicker">Features</p>
+      <h2 id="features-title">Four things it does well.</h2>
+      <p class="sub">One job, done locally: turn a song you love into the villager cover everyone keeps asking for.</p>
+    </header>
+
+    <article class="card card-1" id="feature-hook">
+      <div class="card-copy">
+        <div class="card-top"><span class="glyph glyph-index" data-glyph="01"><span class="glyph-text">01</span></span>
+          <span class="status"><span></span>Default mode</span></div>
+        <p class="card-kicker">Hook mode <span>/</span> --hook</p>
+        <h3>Best 30 seconds</h3>
+        <p class="card-lede">Drop in a song and it finds the chorus for you: the loudest stretch whose harmony repeats most,
+          snapped to a beat. Or pick your own start with <code>--start</code>.</p>
+        <ul class="tags"><li>Auto chorus</li><li>Beat-snapped</li><li>~25 s on an RTX 4050</li></ul>
+      </div>
+      <figure class="card-media"><span class="glyph glyph-art" data-glyph="30S"><span class="glyph-text">30S</span></span>
+        <figcaption>Chorus found at 91.5 s in 凉凉 (it starts at 90.3 s)</figcaption></figure>
+    </article>
+
+    <article class="card card-2" id="feature-full">
+      <div class="card-copy">
+        <div class="card-top"><span class="glyph glyph-index" data-glyph="02"><span class="glyph-text">02</span></span>
+          <span class="status"><span></span>One flag</span></div>
+        <p class="card-kicker">Full mode <span>/</span> --full</p>
+        <h3>The whole song</h3>
+        <p class="card-lede">Every verse, every chorus, every ad-lib, re-sung by a villager over the untouched instrumental.
+          A three-minute track takes about a minute on a laptop GPU, and it still works on CPU.</p>
+        <ul class="tags"><li>Original instrumental</li><li>MP3 and WAV</li><li>Stems on request</li></ul>
+      </div>
+      <figure class="card-media"><span class="glyph glyph-art" data-glyph="FULL"><span class="glyph-text">FULL</span></span>
+        <figcaption>Full Rick Astley cover rendered in 62 s on an RTX 4050</figcaption></figure>
+    </article>
+
+    <article class="card card-3" id="feature-app">
+      <div class="card-copy">
+        <div class="card-top"><span class="glyph glyph-index" data-glyph="03"><span class="glyph-text">03</span></span>
+          <span class="status"><span></span>villager-sound serve</span></div>
+        <p class="card-kicker">Web app <span>/</span> CLI <span>/</span> Python</p>
+        <h3>Upload, listen, download</h3>
+        <p class="card-lede">A local web app with live progress and side-by-side playback of the cover and the original.
+          Prefer the terminal? One command does the same, and <code>make_cover()</code> does it from Python.</p>
+        <ul class="tags"><li>Live progress</li><li>A/B playback</li><li>Docker image</li></ul>
+      </div>
+      <figure class="card-media card-shot"><img src="assets/screenshot.jpg" width="1440" height="812" loading="lazy"
+        alt="The Villager Sound web app: a song upload box with Best 30 seconds and Whole song options"></figure>
+    </article>
+
+    <article class="card card-4" id="feature-measured">
+      <div class="card-copy">
+        <div class="card-top"><span class="glyph glyph-index" data-glyph="04"><span class="glyph-text">04</span></span>
+          <span class="status"><span></span>Open research</span></div>
+        <p class="card-kicker">Measured <span>/</span> not guessed</p>
+        <h3>Matched to the viral sound</h3>
+        <p class="card-lede">We took a popular AI villager cover apart: pitch, syllables, noise bursts, EQ and level.
+          Villager Sound reproduces it, and every number is in the repository.</p>
+        <ul class="tags"><li>−8 semitones</li><li>Dry, mono, −3.9 dB</li><li>Research log</li></ul>
+      </div>
+      <figure class="card-media">
+        <table class="metrics">
+          <caption>31-second chorus, reference cover vs Villager Sound</caption>
+          <thead><tr><th scope="col">Measure</th><th scope="col">Reference</th><th scope="col">Ours</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Syllables</th><td>50</td><td>50</td></tr>
+            <tr><th scope="row">One hum per word</th><td>72%</td><td>68%</td></tr>
+            <tr><th scope="row">Breath noise</th><td>0.19</td><td>0.19</td></tr>
+            <tr><th scope="row">Hit-like bursts</th><td>yes</td><td>yes</td></tr>
+          </tbody>
+        </table>
+      </figure>
+    </article>
+  </section>
+
+  <section class="install" id="install" aria-labelledby="install-title">
+    <header class="section-head">
+      <p class="kicker">Install <span>/ Python 3.10 to 3.12</span></p>
+      <h2 id="install-title">Three commands to your first cover.</h2>
+      <p class="sub">You need ffmpeg on your machine. The first cover downloads about 1.2 GB of models, then everything runs offline.</p>
+    </header>
+    <ol class="steps">
+      <li>
+        <h3>Install</h3>
+        <div class="code"><pre><code>pip install "villager-sound[gpu,web] @ git+https://github.com/kenny2077/villager-sound"</code></pre>
+          <button class="copy button button-ghost button-small" type="button">Copy</button></div>
+        <p>No NVIDIA GPU? Use <code>[cpu,web]</code> instead.</p>
+      </li>
+      <li>
+        <h3>Check</h3>
+        <div class="code"><pre><code>villager-sound doctor</code></pre>
+          <button class="copy button button-ghost button-small" type="button">Copy</button></div>
+        <p>Confirms ffmpeg, your GPU and the model cache.</p>
+      </li>
+      <li>
+        <h3>Cover</h3>
+        <div class="code"><pre><code>villager-sound cover song.mp3        # best 30 s
+villager-sound cover song.mp3 --full # whole song
+villager-sound serve                 # web app</code></pre>
+          <button class="copy button button-ghost button-small" type="button">Copy</button></div>
+        <p>Covers land next to you as MP3 and WAV, with the original excerpt for comparison.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="cta" aria-labelledby="cta-title">
+    <h2 id="cta-title">Make the villagers sing.</h2>
+    <div class="actions">
+      <a class="button button-primary" href="https://github.com/kenny2077/villager-sound">Get it on GitHub <span aria-hidden="true">↗</span></a>
+      <a class="text-link" href="https://github.com/kenny2077/villager-sound/blob/main/docs/how-it-works.md">Read how it works <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <span class="glyph glyph-wordmark" data-glyph="VILLAGER SOUND"><span class="glyph-text">VILLAGER SOUND</span></span>
+  <div class="footer-cols">
+    <div>
+      <h2>Product</h2>
+      <a href="https://github.com/kenny2077/villager-sound">Source <span aria-hidden="true">↗</span></a>
+      <a href="https://github.com/kenny2077/villager-sound/releases">Releases <span aria-hidden="true">↗</span></a>
+      <a href="https://github.com/kenny2077/villager-sound/blob/main/docs/faq.md">FAQ and troubleshooting <span aria-hidden="true">↗</span></a>
+    </div>
+    <div>
+      <h2>Aurora Forge Lab</h2>
+      <a href="https://auroraforgelab.com/">All products <span aria-hidden="true">↗</span></a>
+      <a href="https://kenny2077.github.io/Aurora-Forge/">Aurora Forge <span aria-hidden="true">↗</span></a>
+      <a href="https://github.com/kenny2077">GitHub @kenny2077 <span aria-hidden="true">↗</span></a>
+    </div>
+    <div>
+      <h2>Fine print</h2>
+      <p>MIT licence. A fan project, not affiliated with Mojang Studios or Microsoft. The villager voice model is a
+        third-party download; respect the rights of the songs you cover.</p>
+    </div>
+  </div>
+  <p class="footer-base">© 2026 Aurora Forge Lab</p>
+</footer>
+
+<script src="main.js" defer></script>
+</body>
+</html>
