@@ -3,6 +3,8 @@
 All notable changes to this project are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
+### Added
+- Product page (`site/`) in the Aurora Forge Lab style, with a lamp-field hero, an A/B demo player using a public-domain song, feature cards and install steps. Deployed to GitHub Pages by `.github/workflows/pages.yml`.
 
 ## [0.1.0] - 2026-10-06
 ### Added

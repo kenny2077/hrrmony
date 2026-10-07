@@ -7,6 +7,8 @@
 <p align="center"><b>Every song, sung by a Minecraft villager.</b><br>
 Drop in a track and get back a villager cover, made locally on your own machine: one “hrmm” per word, hit-sound consonants and all.</p>
 
+<p align="center"><a href="https://kenny2077.github.io/villager-sound/"><b>Product page and demo</b></a> &nbsp;|&nbsp; <a href="docs/how-it-works.md">How it works</a> &nbsp;|&nbsp; <a href="https://github.com/kenny2077/villager-sound/releases">Releases</a> &nbsp;|&nbsp; An <a href="https://auroraforgelab.com/">Aurora Forge Lab</a> product</p>
+
 <p align="center">
   <a href="https://github.com/kenny2077/villager-sound/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/kenny2077/villager-sound/ci.yml?branch=main&style=for-the-badge&label=CI"></a>
   <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-3fe0c8?style=for-the-badge"></a>
