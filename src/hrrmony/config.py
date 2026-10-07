@@ -10,8 +10,8 @@ SAMPLE_RATE = 44100
 
 
 def home() -> Path:
-    """Cache/config root. Override with ``VILLAGER_SOUND_HOME``."""
-    root = os.environ.get("VILLAGER_SOUND_HOME") or Path.home() / ".cache" / "villager-sound"
+    """Cache/config root. Override with ``HRRMONY_HOME``."""
+    root = os.environ.get("HRRMONY_HOME") or Path.home() / ".cache" / "hrrmony"
     path = Path(root).expanduser()
     path.mkdir(parents=True, exist_ok=True)
     return path

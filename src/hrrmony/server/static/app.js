@@ -1,4 +1,4 @@
-/* Villager Sound web app: pixel aurora + upload/convert flow. No dependencies. */
+/* Hrrmony web app: pixel aurora + upload/convert flow. No dependencies. */
 (() => {
   "use strict";
   const $ = (s) => document.querySelector(s);
@@ -203,7 +203,7 @@
     go.disabled = !file;
     $("#stage-title").textContent = "Cover stopped";
     $("#stage-msg").textContent = "";
-    $("#error-text").textContent = msg || "The server didn’t respond. Check that villager-sound serve is still running.";
+    $("#error-text").textContent = msg || "The server didn’t respond. Check that hrrmony serve is still running.";
     $("#error").hidden = false;
   }
 

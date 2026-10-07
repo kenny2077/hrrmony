@@ -1,7 +1,7 @@
 services:
-  villager-sound:
+  hrrmony:
     build: .
-    image: villager-sound:latest
+    image: hrrmony:latest
     ports:
       - "127.0.0.1:7860:7860"   # local only; the app has no authentication
     volumes:

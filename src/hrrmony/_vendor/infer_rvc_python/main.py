@@ -1,4 +1,4 @@
-from villager_sound._vendor.infer_rvc_python.lib.log_config import logger
+from hrrmony._vendor.infer_rvc_python.lib.log_config import logger
 import torch
 import torch.nn as nn
 import gc
@@ -8,18 +8,18 @@ import warnings
 import threading
 from tqdm import tqdm
 from transformers import HubertConfig, HubertModel
-from villager_sound._vendor.infer_rvc_python.lib.infer_pack.models import (
+from hrrmony._vendor.infer_rvc_python.lib.infer_pack.models import (
     SynthesizerTrnMs256NSFsid,
     SynthesizerTrnMs256NSFsid_nono,
     SynthesizerTrnMs768NSFsid,
     SynthesizerTrnMs768NSFsid_nono,
 )
-from villager_sound._vendor.infer_rvc_python.lib.audio import load_audio
+from hrrmony._vendor.infer_rvc_python.lib.audio import load_audio
 import soundfile as sf
 from scipy import signal
 from time import time as ttime
 import faiss
-from villager_sound._vendor.infer_rvc_python.root_pipe import VC, change_rms, bh, ah
+from hrrmony._vendor.infer_rvc_python.root_pipe import VC, change_rms, bh, ah
 import librosa
 from urllib.parse import urlparse
 import copy
@@ -311,7 +311,7 @@ class BaseLoader:
         if self.model_pitch_estimator is not None:
             return
 
-        from villager_sound._vendor.infer_rvc_python.lib.rmvpe import RMVPE
+        from hrrmony._vendor.infer_rvc_python.lib.rmvpe import RMVPE
         logger.info("Loading vocal pitch estimator model")
         
         if self.rmvpe_path is None:

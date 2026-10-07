@@ -4,10 +4,10 @@ Thanks for helping make the villagers sing.
 
 ## Development setup
 ```bash
-git clone https://github.com/kenny2077/villager-sound && cd villager-sound
+git clone https://github.com/kenny2077/hrrmony && cd hrrmony
 python -m venv .venv && source .venv/bin/activate      # Python 3.10–3.12
 pip install -e ".[gpu,web,dev]"                        # or [cpu,web,dev]
-villager-sound doctor
+hrrmony doctor
 ```
 You also need `ffmpeg` on your `PATH`.
 
@@ -21,7 +21,7 @@ Unit tests must not download models or need a GPU. Mock the heavy parts the way 
 
 ## Project layout
 ```
-src/villager_sound/
+src/hrrmony/
   cli.py          command line (cover / serve / doctor / voices)
   pipeline.py     make_cover(): orchestrates the stages below
   segment.py      hook (chorus) finder

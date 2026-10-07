@@ -95,7 +95,7 @@ def create_app(runner: JobRunner | None = None) -> FastAPI:
     root = home() / "web"
     root.mkdir(parents=True, exist_ok=True)
     runner = runner or JobRunner(root)
-    app = FastAPI(title="villager-sound", version=__version__)
+    app = FastAPI(title="hrrmony", version=__version__)
 
     @app.get("/api/health")
     def health() -> dict[str, Any]:

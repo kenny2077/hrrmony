@@ -6,8 +6,8 @@ import pytest
 pytest.importorskip("fastapi")
 from fastapi.testclient import TestClient  # noqa: E402
 
-from villager_sound.pipeline import CoverResult  # noqa: E402
-from villager_sound.server.app import JobRunner, create_app  # noqa: E402
+from hrrmony.pipeline import CoverResult  # noqa: E402
+from hrrmony.server.app import JobRunner, create_app  # noqa: E402
 
 
 def fake_cover(song, out_dir, opts, progress):
@@ -79,4 +79,4 @@ def test_unknown_job_404(client):
 def test_serves_ui(client):
     r = client.get("/")
     assert r.status_code == 200
-    assert "Villager Sound" in r.text
+    assert "Hrrmony" in r.text

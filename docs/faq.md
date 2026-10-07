@@ -7,17 +7,17 @@ Install ffmpeg:
 - Windows: `winget install ffmpeg`
 - Without admin rights: download a static build and put it on your `PATH`.
 
-Then run `villager-sound doctor`.
+Then run `hrrmony doctor`.
 
 **It runs on CPU even though I have an NVIDIA GPU.**
 `pip` installed a CPU-only torch. Reinstall torch from the PyTorch index that matches your driver, for example:
 ```bash
 pip install --force-reinstall torch torchaudio --index-url https://download.pytorch.org/whl/cu124
 ```
-Then check that `villager-sound doctor` shows `CUDA …`.
+Then check that `hrrmony doctor` shows `CUDA …`.
 
 **The first run is slow or seems to hang.**
-On first use it downloads the separator (about 870 MB), the villager voice (about 65 MB), the pitch model (about 180 MB) and the HuBERT encoder. Later runs reuse the cache in `~/.cache/villager-sound`.
+On first use it downloads the separator (about 870 MB), the villager voice (about 65 MB), the pitch model (about 180 MB) and the HuBERT encoder. Later runs reuse the cache in `~/.cache/hrrmony`.
 
 **The villager sounds off key.**
 That's the `classic` shift (−8 semitones). It reproduces the viral covers, which sit a major third away from the backing track. Use `--shift in-key` (−12) to stay on pitch.

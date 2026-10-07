@@ -1,6 +1,6 @@
 # Research log
 
-These are the scripts from the experiments behind `villager-sound`. They aren't part of the installed package, and they assume the original working layout: `input/`, `work/`, `ref/`, `out/`, and a `.venv-conv` environment. They show how the method was found and measured, so new ideas can be tested the same way.
+These are the scripts from the experiments behind `hrrmony`. They aren't part of the installed package, and they assume the original working layout: `input/`, `work/`, `ref/`, `out/`, and a `.venv-conv` environment. They show how the method was found and measured, so new ideas can be tested the same way.
 
 ## Iterations
 

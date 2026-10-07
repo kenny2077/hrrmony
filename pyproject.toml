@@ -3,12 +3,12 @@ requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
 
 [project]
-name = "villager-sound"
+name = "hrrmony"
 dynamic = ["version"]
 description = "Turn any song into a Minecraft villager cover: vocal separation + RVC villager voice, locally."
 readme = "README.md"
 license = "MIT"
-license-files = ["LICENSE", "src/villager_sound/_vendor/infer_rvc_python/LICENSE"]
+license-files = ["LICENSE", "src/hrrmony/_vendor/infer_rvc_python/LICENSE"]
 requires-python = ">=3.10,<3.13"
 authors = [{ name = "Kaiyi Guo" }]
 keywords = ["minecraft", "villager", "voice-conversion", "rvc", "music", "cover", "audio"]
@@ -47,25 +47,25 @@ ml = [
   "tqdm>=4.60",
   "setuptools<81",
 ]
-cpu = ["villager-sound[ml]", "audio-separator[cpu]>=0.30"]
-gpu = ["villager-sound[ml]", "audio-separator[gpu]>=0.30"]
+cpu = ["hrrmony[ml]", "audio-separator[cpu]>=0.30"]
+gpu = ["hrrmony[ml]", "audio-separator[gpu]>=0.30"]
 web = ["fastapi>=0.110", "uvicorn[standard]>=0.29", "python-multipart>=0.0.9"]
-all = ["villager-sound[gpu,web]"]
-dev = ["pytest>=8", "ruff>=0.6", "httpx>=0.27", "villager-sound[web]"]
+all = ["hrrmony[gpu,web]"]
+dev = ["pytest>=8", "ruff>=0.6", "httpx>=0.27", "hrrmony[web]"]
 
 [project.scripts]
-villager-sound = "villager_sound.cli:main"
+hrrmony = "hrrmony.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/kenny2077/villager-sound"
-Issues = "https://github.com/kenny2077/villager-sound/issues"
-Changelog = "https://github.com/kenny2077/villager-sound/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/kenny2077/hrrmony"
+Issues = "https://github.com/kenny2077/hrrmony/issues"
+Changelog = "https://github.com/kenny2077/hrrmony/blob/main/CHANGELOG.md"
 
 [tool.hatch.version]
-path = "src/villager_sound/__init__.py"
+path = "src/hrrmony/__init__.py"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/villager_sound"]
+packages = ["src/hrrmony"]
 
 [tool.hatch.build.targets.sdist]
 exclude = ["/research", "/.github", "/assets/*.mp3"]
@@ -81,7 +81,7 @@ addopts = "-m 'not slow and not gpu'"
 [tool.ruff]
 line-length = 110
 target-version = "py310"
-extend-exclude = ["src/villager_sound/_vendor", "research"]
+extend-exclude = ["src/hrrmony/_vendor", "research"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "SIM"]

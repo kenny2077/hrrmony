@@ -1,4 +1,4 @@
-"""`villager-sound` command line."""
+"""`hrrmony` command line."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ def _shift(value: str) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(prog="villager-sound",
+    p = argparse.ArgumentParser(prog="hrrmony",
                                 description="Turn any song into a Minecraft villager cover.")
     p.add_argument("-V", "--version", action="version", version=f"%(prog)s {__version__}")
     p.add_argument("-v", "--verbose", action="store_true", help="show debug logs")
@@ -89,11 +89,11 @@ def cmd_serve(a: argparse.Namespace) -> int:
     try:
         import uvicorn
     except ImportError:
-        print("The web app needs the 'web' extra: pip install 'villager-sound[web]'", file=sys.stderr)
+        print("The web app needs the 'web' extra: pip install 'hrrmony[web]'", file=sys.stderr)
         return 1
     from .server.app import create_app
 
-    print(f"villager-sound {__version__} → http://{a.host}:{a.port}")
+    print(f"hrrmony {__version__} → http://{a.host}:{a.port}")
     uvicorn.run(create_app(), host=a.host, port=a.port, log_level="warning")
     return 0
 
@@ -106,7 +106,7 @@ def cmd_doctor(_: argparse.Namespace) -> int:
         ok &= good
         print(f"  {'✓' if good else '✗'} {label:<14} {detail}")
 
-    print(f"villager-sound {__version__}")
+    print(f"hrrmony {__version__}")
     line(bool(shutil.which("ffmpeg") and shutil.which("ffprobe")), "ffmpeg",
          shutil.which("ffmpeg") or "not found: install ffmpeg")
     try:
@@ -116,7 +116,7 @@ def cmd_doctor(_: argparse.Namespace) -> int:
         line(True, "torch", f"{torch.__version__} · " + (
             f"CUDA {torch.cuda.get_device_name(0)}" if gpu else "CPU only (works, ~5-10x slower)"))
     except ImportError:
-        line(False, "torch", "not installed: pip install 'villager-sound[cpu]' or '[gpu]'")
+        line(False, "torch", "not installed: pip install 'hrrmony[cpu]' or '[gpu]'")
     for mod, extra in [("audio_separator", "cpu|gpu"), ("faiss", "cpu|gpu"), ("fastapi", "web")]:
         try:
             __import__(mod)

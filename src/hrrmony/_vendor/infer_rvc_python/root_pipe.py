@@ -5,7 +5,7 @@ import scipy.signal as signal
 import pyworld, os, traceback, faiss, librosa  # vendored change: torchcrepe imported lazily
 from scipy import signal
 from functools import lru_cache
-from villager_sound._vendor.infer_rvc_python.lib.log_config import logger
+from hrrmony._vendor.infer_rvc_python.lib.log_config import logger
 
 now_dir = os.getcwd()
 sys.path.append(now_dir)
@@ -132,7 +132,7 @@ class VC(object):
             f0 = f0[0].cpu().numpy()
         elif "rmvpe" in f0_method:
             if hasattr(self, "model_rmvpe") == False:
-                from villager_sound._vendor.infer_rvc_python.lib.rmvpe import RMVPE
+                from hrrmony._vendor.infer_rvc_python.lib.rmvpe import RMVPE
 
                 logger.info("Loading vocal pitch estimator model")
                 self.model_rmvpe = RMVPE(

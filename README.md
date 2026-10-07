@@ -1,16 +1,17 @@
 <p align="center">
-  <img src="assets/screenshot.jpg" alt="Villager Sound web app: upload a song, choose the best 30 seconds or the whole song, and get a Minecraft villager cover" width="100%">
+  <img src="assets/screenshot.jpg" alt="Hrrmony web app: upload a song, choose the best 30 seconds or the whole song, and get a Minecraft villager cover" width="100%">
 </p>
 
-<h1 align="center">Villager Sound</h1>
+<h1 align="center">Hrrmony</h1>
 
 <p align="center"><b>Every song, sung by a Minecraft villager.</b><br>
+<i>Hrrmony</i> = the villager's “hrmm” + harmony.<br>
 Drop in a track and get back a villager cover, made locally on your own machine: one “hrmm” per word, hit-sound consonants and all.</p>
 
-<p align="center"><a href="https://kenny2077.github.io/villager-sound/"><b>Product page and demo</b></a> &nbsp;|&nbsp; <a href="docs/how-it-works.md">How it works</a> &nbsp;|&nbsp; <a href="https://github.com/kenny2077/villager-sound/releases">Releases</a> &nbsp;|&nbsp; An <a href="https://auroraforgelab.com/">Aurora Forge Lab</a> product</p>
+<p align="center"><a href="https://kenny2077.github.io/hrrmony/"><b>Product page and demo</b></a> &nbsp;|&nbsp; <a href="docs/how-it-works.md">How it works</a> &nbsp;|&nbsp; <a href="https://github.com/kenny2077/hrrmony/releases">Releases</a> &nbsp;|&nbsp; An <a href="https://auroraforgelab.com/">Aurora Forge Lab</a> product</p>
 
 <p align="center">
-  <a href="https://github.com/kenny2077/villager-sound/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/kenny2077/villager-sound/ci.yml?branch=main&style=for-the-badge&label=CI"></a>
+  <a href="https://github.com/kenny2077/hrrmony/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/kenny2077/hrrmony/ci.yml?branch=main&style=for-the-badge&label=CI"></a>
   <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-3fe0c8?style=for-the-badge"></a>
   <img alt="Python 3.10 to 3.12" src="https://img.shields.io/badge/python-3.10%E2%80%933.12-3aa0e8?style=for-the-badge">
   <img alt="GPU optional" src="https://img.shields.io/badge/GPU-optional-ffb14a?style=for-the-badge">
@@ -34,29 +35,29 @@ Drop in a track and get back a villager cover, made locally on your own machine:
 You need Python 3.10–3.12 and [ffmpeg](docs/faq.md).
 
 ```bash
-pip install "villager-sound[gpu,web] @ git+https://github.com/kenny2077/villager-sound"   # NVIDIA GPU
-pip install "villager-sound[cpu,web] @ git+https://github.com/kenny2077/villager-sound"   # CPU only / macOS
-villager-sound doctor
+pip install "hrrmony[gpu,web] @ git+https://github.com/kenny2077/hrrmony"   # NVIDIA GPU
+pip install "hrrmony[cpu,web] @ git+https://github.com/kenny2077/hrrmony"   # CPU only / macOS
+hrrmony doctor
 ```
 
 Or with Docker (NVIDIA Container Toolkit):
 
 ```bash
-git clone https://github.com/kenny2077/villager-sound && cd villager-sound
+git clone https://github.com/kenny2077/hrrmony && cd hrrmony
 docker compose up --build      # then open http://127.0.0.1:7860
 ```
 
 ## Getting started
 
 ```bash
-villager-sound serve                                   # web app at http://127.0.0.1:7860
-villager-sound cover song.mp3                          # best 30 s (chorus), "classic" villager sound
-villager-sound cover song.mp3 --full                   # the entire song
-villager-sound cover song.mp3 --shift in-key           # an octave down, in tune with the music
-villager-sound cover song.mp3 --start 43 -d 20         # pick the excerpt yourself
-villager-sound cover song.mp3 --stems -o covers/       # also save villager vocal + instrumental
-villager-sound voices --download villager              # pre-fetch models (~1.2 GB, once)
-villager-sound doctor                                  # check ffmpeg, CUDA and the cache
+hrrmony serve                                   # web app at http://127.0.0.1:7860
+hrrmony cover song.mp3                          # best 30 s (chorus), "classic" villager sound
+hrrmony cover song.mp3 --full                   # the entire song
+hrrmony cover song.mp3 --shift in-key           # an octave down, in tune with the music
+hrrmony cover song.mp3 --start 43 -d 20         # pick the excerpt yourself
+hrrmony cover song.mp3 --stems -o covers/       # also save villager vocal + instrumental
+hrrmony voices --download villager              # pre-fetch models (~1.2 GB, once)
+hrrmony doctor                                  # check ffmpeg, CUDA and the cache
 ```
 
 Each cover writes `<song>_villager_<start>s.mp3` and `.wav`, plus a loudness-matched `…_original.mp3` of the same excerpt for A/B listening.
@@ -64,7 +65,7 @@ Each cover writes `<song>_villager_<start>s.mp3` and `.wav`, plus a loudness-mat
 ### From Python
 
 ```python
-from villager_sound import CoverOptions, make_cover
+from hrrmony import CoverOptions, make_cover
 
 result = make_cover("song.mp3", "covers/", CoverOptions(mode="hook", shift=-8))
 print(result.outputs["mp3"], result.start, result.timings["total"])
@@ -101,7 +102,7 @@ The popular villager covers turned out not to be villager clips pasted onto note
 
 - Covers of copyrighted songs are derivative works. Make sure you have the right to use the song before you publish anything.
 - The default voice is a community RVC model ([r3gm/villager](https://huggingface.co/r3gm/villager)), downloaded at runtime. It is not part of this repository, so check its terms.
-- Villager Sound is a fan project. It is not affiliated with Mojang Studios or Microsoft. Minecraft is a trademark of Mojang Studios.
+- Hrrmony is a fan project. It is not affiliated with Mojang Studios or Microsoft. Minecraft is a trademark of Mojang Studios.
 
 ## Contributing
 

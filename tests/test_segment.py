@@ -1,7 +1,7 @@
 import numpy as np
 import soundfile as sf
 
-from villager_sound.segment import ANALYSIS_SR, find_hook, hook_scores
+from hrrmony.segment import ANALYSIS_SR, find_hook, hook_scores
 
 
 def chord(freqs, seconds, sr=ANALYSIS_SR, amp=0.3):

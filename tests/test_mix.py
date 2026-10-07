@@ -1,7 +1,7 @@
 import numpy as np
 
-from villager_sound import mix
-from villager_sound.config import SAMPLE_RATE as SR
+from hrrmony import mix
+from hrrmony.config import SAMPLE_RATE as SR
 
 
 def tone(hz, seconds=2.0, amp=0.5):

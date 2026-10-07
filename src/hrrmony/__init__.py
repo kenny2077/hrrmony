@@ -1,11 +1,11 @@
-"""villager-sound: turn any song into a Minecraft villager cover."""
+"""hrrmony: turn any song into a Minecraft villager cover."""
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 __all__ = ["__version__", "CoverOptions", "CoverResult", "make_cover"]
 
 
-def __getattr__(name: str):  # lazy: keep `import villager_sound` light
+def __getattr__(name: str):  # lazy: keep `import hrrmony` light
     if name in {"CoverOptions", "CoverResult", "make_cover"}:
         from . import pipeline
 

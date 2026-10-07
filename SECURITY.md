@@ -1,7 +1,7 @@
 # Security policy
 
 ## Reporting a vulnerability
-Please **do not open a public issue**. Report it privately through [GitHub Security Advisories](https://github.com/kenny2077/villager-sound/security/advisories/new).
+Please **do not open a public issue**. Report it privately through [GitHub Security Advisories](https://github.com/kenny2077/hrrmony/security/advisories/new).
 
 Include:
 - the affected version or commit
@@ -11,7 +11,7 @@ Include:
 You will get an acknowledgement within 7 days. We aim to release a fix within 90 days and will credit you unless you ask us not to.
 
 ## Scope
-- In scope: the `villager-sound` package, the CLI, and the local web app (`villager-sound serve`). This includes upload handling, path handling and the job API.
+- In scope: the `hrrmony` package, the CLI, and the local web app (`hrrmony serve`). This includes upload handling, path handling and the job API.
 - Out of scope: vulnerabilities in third-party dependencies (report those upstream) and in third-party voice-model files.
 
 ## Notes

@@ -4,14 +4,14 @@ import numpy as np
 import pytest
 import soundfile as sf
 
-from villager_sound.config import SAMPLE_RATE as SR
+from hrrmony.config import SAMPLE_RATE as SR
 
 pytestmark = pytest.mark.slow
 
 
 def test_make_cover_end_to_end(tmp_path):
     pytest.importorskip("audio_separator")
-    from villager_sound.pipeline import CoverOptions, make_cover
+    from hrrmony.pipeline import CoverOptions, make_cover
 
     # a sung-ish vowel: harmonic stack with vibrato over a quiet chord
     t = np.arange(12 * SR) / SR

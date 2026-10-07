@@ -5,9 +5,9 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
-from villager_sound._vendor.infer_rvc_python.lib.infer_pack import commons
-from villager_sound._vendor.infer_rvc_python.lib.infer_pack import modules
-from villager_sound._vendor.infer_rvc_python.lib.infer_pack.modules import LayerNorm
+from hrrmony._vendor.infer_rvc_python.lib.infer_pack import commons
+from hrrmony._vendor.infer_rvc_python.lib.infer_pack import modules
+from hrrmony._vendor.infer_rvc_python.lib.infer_pack.modules import LayerNorm
 
 
 class Encoder(nn.Module):

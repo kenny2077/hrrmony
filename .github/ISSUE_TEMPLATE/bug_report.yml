@@ -15,14 +15,14 @@ body:
     attributes:
       label: Steps to reproduce
       placeholder: |
-        1. villager-sound cover song.mp3 --full
+        1. hrrmony cover song.mp3 --full
         2. ...
     validations:
       required: true
   - type: textarea
     id: doctor
     attributes:
-      label: Output of `villager-sound doctor`
+      label: Output of `hrrmony doctor`
       render: text
     validations:
       required: true

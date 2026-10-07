@@ -1,7 +1,7 @@
 import pytest
 
-from villager_sound import __version__
-from villager_sound.cli import build_parser, main
+from hrrmony import __version__
+from hrrmony.cli import build_parser, main
 
 
 def parse(*args):
