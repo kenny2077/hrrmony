@@ -24,8 +24,13 @@ def fake_cover(song, out_dir, opts, progress):
 
 
 @pytest.fixture
-def client(tmp_path):
-    return TestClient(create_app(JobRunner(tmp_path, run=fake_cover)))
+def runner(tmp_path):
+    return JobRunner(tmp_path, run=fake_cover)
+
+
+@pytest.fixture
+def client(runner):
+    return TestClient(create_app(runner), base_url="http://127.0.0.1")
 
 
 def wait(client, job_id, timeout=5.0):
@@ -80,3 +85,38 @@ def test_serves_ui(client):
     r = client.get("/")
     assert r.status_code == 200
     assert "Hrrmony" in r.text
+
+
+def test_rejects_foreign_host_header(client):
+    """DNS rebinding: a page served as evil.example that resolves to 127.0.0.1."""
+    r = client.get("/api/health", headers={"host": "evil.example"})
+    assert r.status_code == 400
+
+
+def test_rejects_cross_origin_post(client):
+    r = client.post("/api/jobs", files={"file": ("song.mp3", b"\x00", "audio/mpeg")},
+                    headers={"origin": "https://evil.example"})
+    assert r.status_code == 403
+
+
+def test_same_origin_post_is_fine(client):
+    r = client.post("/api/jobs", files={"file": ("song.mp3", b"\x00", "audio/mpeg")},
+                    headers={"origin": "http://127.0.0.1:7860"})
+    assert r.status_code == 200
+
+
+def test_queue_limit(client, runner, monkeypatch):
+    monkeypatch.setattr(runner, "busy", lambda: True)
+    r = client.post("/api/jobs", files={"file": ("song.mp3", b"\x00", "audio/mpeg")})
+    assert r.status_code == 429
+
+
+def test_prune_removes_old_job_folders(runner, tmp_path):
+    import os
+
+    old = tmp_path / "oldjob"
+    old.mkdir()
+    (old / "input.mp3").write_bytes(b"x")
+    os.utime(old, (0, 0))
+    runner.prune()
+    assert not old.exists()

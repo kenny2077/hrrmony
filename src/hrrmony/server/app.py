@@ -9,17 +9,21 @@ import uuid
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 
 from .. import __version__
-from ..config import SHIFT_PRESETS, home
+from ..config import SHIFT_PRESETS, home, parse_shift
 
 STATIC = Path(__file__).parent / "static"
 ALLOWED = {".mp3", ".wav", ".flac", ".m4a", ".aac", ".ogg", ".opus", ".webm", ".mp4"}
 MAX_BYTES = 300 * 1024 * 1024
+MAX_QUEUED = 8                  # pending covers; beyond this the API answers 429
+KEEP_SECONDS = 24 * 3600        # uploads and results older than this are deleted
+LOOPBACK_HOSTS = frozenset({"127.0.0.1", "localhost", "::1"})
 
 
 @dataclass
@@ -57,9 +61,29 @@ class JobRunner:
         self.jobs: dict[str, Job] = {}
         self.q: queue.Queue[tuple[Job, Path]] = queue.Queue()
         self._run = run or make_cover
+        self.prune()
         threading.Thread(target=self._loop, daemon=True).start()
 
+    def prune(self, now: float | None = None) -> None:
+        """Forget jobs and delete job folders older than KEEP_SECONDS (keeps the disk bounded)."""
+        now = now or time.time()
+        for jid, job in list(self.jobs.items()):
+            if job.status in {"done", "error"} and now - job.created > KEEP_SECONDS:
+                self.jobs.pop(jid, None)
+        for d in self.root.iterdir() if self.root.exists() else []:
+            if d.is_dir() and d.name not in self.jobs and now - d.stat().st_mtime > KEEP_SECONDS:
+                shutil.rmtree(d, ignore_errors=True)
+        # cached separations of uploads are never reused once the upload is gone
+        work = self.root.parent / "work"
+        for d in work.iterdir() if work.exists() else []:
+            if d.is_dir() and now - d.stat().st_mtime > KEEP_SECONDS:
+                shutil.rmtree(d, ignore_errors=True)
+
+    def busy(self) -> bool:
+        return self.q.qsize() >= MAX_QUEUED
+
     def submit(self, job: Job, upload: Path) -> Job:
+        self.prune()
         self.jobs[job.id] = job
         self.q.put((job, upload))
         return job
@@ -90,12 +114,26 @@ class JobRunner:
                 traceback.print_exc()
 
 
-def create_app(runner: JobRunner | None = None) -> FastAPI:
+def create_app(runner: JobRunner | None = None,
+               allowed_hosts: frozenset[str] | None = LOOPBACK_HOSTS) -> FastAPI:
+    """`allowed_hosts`: Host header names accepted (None = any). The default rejects DNS-rebinding
+    requests that reach 127.0.0.1 under another site's name."""
     # (no `from __future__ import annotations` here: FastAPI resolves the route signatures)
     root = home() / "web"
     root.mkdir(parents=True, exist_ok=True)
     runner = runner or JobRunner(root)
     app = FastAPI(title="hrrmony", version=__version__)
+
+    @app.middleware("http")
+    async def guard(request, call_next):
+        host = (urlparse(f"//{request.headers.get('host', '')}").hostname or "").lower()
+        if allowed_hosts is not None and host not in allowed_hosts:
+            return PlainTextResponse("host not allowed", status_code=400)
+        # cross-site form posts (CSRF): a page on another origin must not queue work here
+        origin = request.headers.get("origin")
+        if request.method not in {"GET", "HEAD"} and origin and urlparse(origin).hostname != host:
+            return PlainTextResponse("cross-origin request refused", status_code=403)
+        return await call_next(request)
 
     @app.get("/api/health")
     def health() -> dict[str, Any]:
@@ -112,14 +150,14 @@ def create_app(runner: JobRunner | None = None) -> FastAPI:
                          shift: str = Form("classic"), duration: float = Form(30.0)):
         if mode not in {"hook", "full"}:
             raise HTTPException(400, "mode must be 'hook' or 'full'")
-        semis = SHIFT_PRESETS.get(shift)
-        if semis is None:
-            try:
-                semis = int(shift)
-            except ValueError:
-                raise HTTPException(400, "shift must be 'classic', 'in-key' or semitones") from None
+        try:
+            semis = parse_shift(shift)
+        except ValueError as e:
+            raise HTTPException(400, str(e)) from None
         if not 5 <= duration <= 120:
             raise HTTPException(400, "duration must be between 5 and 120 seconds")
+        if runner.busy():
+            raise HTTPException(429, "too many covers waiting; try again when one finishes")
         name = Path(file.filename or "song").name
         if Path(name).suffix.lower() not in ALLOWED:
             raise HTTPException(415, f"unsupported file type; use one of {sorted(ALLOWED)}")

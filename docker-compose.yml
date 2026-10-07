@@ -6,6 +6,8 @@ services:
       - "127.0.0.1:7860:7860"   # local only; the app has no authentication
     volumes:
       - villager-cache:/data     # models + jobs survive restarts
+    environment:
+      HRRMONY_ALLOWED_HOSTS: "127.0.0.1,localhost"   # reject DNS-rebinding Host headers
     restart: unless-stopped
     deploy:
       resources:
