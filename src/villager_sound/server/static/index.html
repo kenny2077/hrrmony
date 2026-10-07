@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Villager Sound</title>
+<meta name="description" content="Turn any song into a Minecraft villager cover, locally on your machine.">
+<meta name="theme-color" content="#04110f">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%2304110f'/%3E%3Crect x='1' y='1' width='6' height='3' fill='%23b07a52'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%233fe0c8'/%3E%3Crect x='5' y='2' width='1' height='1' fill='%233fe0c8'/%3E%3Crect x='3' y='3' width='2' height='4' fill='%238a5a3c'/%3E%3C/svg%3E">
+</head>
+<body>
+<div class="frame" aria-hidden="true"></div>
+
+<header class="nav">
+  <a class="brand" href="#top" aria-label="Villager Sound home">
+    <svg class="brand-mark" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="1" y="1" width="10" height="5" fill="#b07a52"/>
+      <rect x="1" y="1" width="10" height="1" fill="#5b3a26"/>
+      <rect x="3" y="3" width="2" height="1" fill="#e8f3ee"/><rect x="4" y="3" width="1" height="1" fill="#16b3a0"/>
+      <rect x="7" y="3" width="2" height="1" fill="#e8f3ee"/><rect x="7" y="3" width="1" height="1" fill="#16b3a0"/>
+      <rect x="5" y="4" width="2" height="5" fill="#8a5a3c"/>
+      <rect x="2" y="6" width="8" height="5" fill="#6e4a33"/>
+      <rect x="4" y="9" width="4" height="1" fill="#3d2618"/>
+    </svg>
+    <span>Villager Sound</span>
+  </a>
+  <nav class="tabs" aria-label="Sections">
+    <a href="#make"><b>1</b> Make a cover</a>
+    <a href="#how"><b>2</b> How it works</a>
+  </nav>
+  <a class="btn btn-ghost btn-sm" href="https://github.com/kenny2077/villager-sound" rel="noopener">GitHub</a>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <canvas id="aurora" class="aurora" aria-hidden="true"></canvas>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="kicker">Runs on your own machine</p>
+        <h1>Every song, sung by a villager.</h1>
+        <p class="lede">Drop in a track. Villager Sound pulls out the vocal, re-sings it in the voice of a
+          Minecraft villager, and mixes it back over the original music: one “hrmm” per word,
+          hit-sound consonants and all.</p>
+      </div>
+
+      <form id="make" class="panel" novalidate>
+        <h2 class="panel-title">Make a cover</h2>
+
+        <label class="drop" id="drop" tabindex="0">
+          <input id="file" name="file" type="file" accept="audio/*,.mp3,.wav,.flac,.m4a,.ogg,.opus" hidden>
+          <span class="drop-icon" aria-hidden="true"></span>
+          <span class="drop-main" id="drop-main">Choose a song or drop it here</span>
+          <span class="drop-sub" id="drop-sub">MP3, WAV, FLAC or M4A, up to 300 MB</span>
+        </label>
+
+        <fieldset class="choice">
+          <legend>Length</legend>
+          <div class="seg" role="radiogroup">
+            <label><input type="radio" name="mode" value="hook" checked><span><b>Best 30 seconds</b><small>Finds the chorus for you</small></span></label>
+            <label><input type="radio" name="mode" value="full"><span><b>Whole song</b><small>Takes a few minutes</small></span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="choice">
+          <legend>Villager pitch</legend>
+          <div class="seg" role="radiogroup">
+            <label><input type="radio" name="shift" value="classic" checked><span><b>Classic</b><small>The viral cover sound</small></span></label>
+            <label><input type="radio" name="shift" value="in-key"><span><b>In key</b><small>An octave down, on pitch</small></span></label>
+          </div>
+        </fieldset>
+
+        <button class="btn btn-primary btn-wide" id="go" type="submit" disabled>Make villager cover</button>
+        <p class="hint" id="device" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="stage" id="stage" hidden aria-live="polite">
+    <div class="stage-inner">
+      <div class="stage-head">
+        <h2 id="stage-title">Working on it</h2>
+        <p class="stage-msg" id="stage-msg">Waiting for the GPU</p>
+      </div>
+      <ol class="steps" id="steps">
+        <li data-stage="analyze"><i></i><span>Find the hook</span></li>
+        <li data-stage="separate"><i></i><span>Separate the vocal</span></li>
+        <li data-stage="convert"><i></i><span>Villagerize</span></li>
+        <li data-stage="master"><i></i><span>Mix and master</span></li>
+      </ol>
+      <div class="cells" id="cells" aria-hidden="true"></div>
+
+      <div class="result" id="result" hidden>
+        <div class="player" data-kind="cover">
+          <p class="player-label">Villager cover</p>
+          <audio id="cover-audio" controls preload="metadata"></audio>
+        </div>
+        <div class="player" data-kind="original">
+          <p class="player-label">Original excerpt</p>
+          <audio id="orig-audio" controls preload="metadata"></audio>
+        </div>
+        <div class="downloads">
+          <a class="btn btn-ember" id="dl-mp3" download>Download MP3</a>
+          <a class="btn btn-ghost" id="dl-wav" download>Download WAV</a>
+          <button class="btn btn-ghost" id="again" type="button">Make another</button>
+        </div>
+      </div>
+
+      <div class="error" id="error" hidden>
+        <p><b>The cover didn’t finish.</b> <span id="error-text"></span></p>
+        <button class="btn btn-ghost btn-sm" id="retry" type="button">Try again</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper" id="how">
+    <div class="paper-inner">
+      <h2>How it works</h2>
+      <p class="paper-lede">We reverse-engineered the viral “villager sings” covers. They aren’t villager
+        sound clips glued onto notes: the singer’s own vocal is re-voiced by a model trained on villager
+        sounds, so the phrasing stays human and the consonants come out as villager hit sounds.</p>
+      <ol class="how">
+        <li>
+          <h3>Find the hook</h3>
+          <p>For a 30-second cover, the loudest stretch of the song whose harmony repeats most often is
+            picked and snapped to a beat. That is almost always the chorus.</p>
+        </li>
+        <li>
+          <h3>Separate</h3>
+          <p>Mel-Band RoFormer splits the track into the full vocal (lead and backing) and the
+            instrumental.</p>
+        </li>
+        <li>
+          <h3>Villagerize</h3>
+          <p>An RVC villager voice re-sings the vocal 8 semitones lower, or an octave lower if you want it
+            in key. Pitch, timing and loudness follow the original singer.</p>
+        </li>
+        <li>
+          <h3>Mix and master</h3>
+          <p>The villager sits dry and centred, about 4 dB under the original music, with the rumble cut
+            and the top end softened, then loudness-matched to −16 LUFS.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>Villager Sound is a fan project and is not affiliated with Mojang or Microsoft. Voice models are
+    third-party; check their licences before publishing covers, and respect the rights of the songs you use.</p>
+  <p class="foot-links"><a href="https://github.com/kenny2077/villager-sound">Source on GitHub</a><span>MIT licence</span></p>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
