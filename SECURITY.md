@@ -15,4 +15,6 @@ You will get an acknowledgement within 7 days. We aim to release a fix within 90
 - Out of scope: vulnerabilities in third-party dependencies (report those upstream) and in third-party voice-model files.
 
 ## Notes
-The web app binds to `127.0.0.1` by default and has no authentication. It is meant for local use. If you expose it on a network (`--host 0.0.0.0`), put it behind a reverse proxy with authentication. RVC voice models are PyTorch pickles, so only load voices from sources you trust. The built-in registry pins specific Hugging Face repos.
+- **Local web app:** it binds to `127.0.0.1` by default and has no authentication. It rejects foreign `Host` headers (DNS rebinding) and cross-origin POSTs. If you expose it on a network (`--host 0.0.0.0`), put it behind a reverse proxy with authentication, and set `HRRMONY_ALLOWED_HOSTS`.
+- **Models:** every download is pinned to a Hugging Face commit. RVC and RMVPE checkpoints are loaded with `weights_only=True`, and HuBERT is loaded from safetensors.
+- **Media files:** decoding untrusted media uses ffmpeg, so keep ffmpeg up to date.

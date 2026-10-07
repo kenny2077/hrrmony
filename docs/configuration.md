@@ -5,6 +5,7 @@
 |---|---|---|
 | `HRRMONY_HOME` | `~/.cache/hrrmony` | Model cache (`models/`), cached separations (`work/`) and web-app jobs (`web/`) |
 | `HF_HOME` | Hugging Face default | Where `transformers` caches the HuBERT encoder |
+| `HRRMONY_ALLOWED_HOSTS` | loopback only | Comma-separated `Host` names the web app accepts when served on a non-loopback address (e.g. behind a proxy). Unset there means any host. |
 | `CUDA_VISIBLE_DEVICES` | all | Choose a GPU, or set it to empty to force CPU. The `--cpu` flag does the same. |
 
 ## `hrrmony cover`
