@@ -22,13 +22,7 @@
 
 <header class="site-header" id="top">
   <a class="brand" href="#top" aria-label="Villager Sound, back to top">
-    <svg class="brand-mark" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true">
-      <rect x="1" y="1" width="10" height="5" fill="#b07a52"/><rect x="1" y="1" width="10" height="1" fill="#5b3a26"/>
-      <rect x="3" y="3" width="2" height="1" fill="#eaf2f8"/><rect x="4" y="3" width="1" height="1" fill="#4fe3d0"/>
-      <rect x="7" y="3" width="2" height="1" fill="#eaf2f8"/><rect x="7" y="3" width="1" height="1" fill="#4fe3d0"/>
-      <rect x="5" y="4" width="2" height="5" fill="#8a5a3c"/><rect x="2" y="6" width="8" height="5" fill="#6e4a33"/>
-      <rect x="4" y="9" width="4" height="1" fill="#3d2618"/>
-    </svg>
+    <img class="brand-mark" src="assets/villager.svg" width="28" height="28" alt="">
     <span class="brand-text">Villager Sound</span>
   </a>
   <nav class="nav-links" aria-label="Sections">
@@ -44,7 +38,6 @@
     <canvas class="sky" id="sky" aria-hidden="true"></canvas>
     <div class="hero-inner">
       <div class="hero-copy">
-        <p class="kicker">Aurora Forge Lab <span>/ Free and open source</span></p>
         <h1 id="hero-title">Every song, sung by a villager.</h1>
         <p class="lede">Villager Sound pulls the vocal out of any track, re-sings it in the voice of a Minecraft
           villager and lays it back over the original music. It runs on your own machine, so your music
@@ -119,7 +112,7 @@
           snapped to a beat. Or pick your own start with <code>--start</code>.</p>
         <ul class="tags"><li>Auto chorus</li><li>Beat-snapped</li><li>~25 s on an RTX 4050</li></ul>
       </div>
-      <figure class="card-media"><span class="glyph glyph-art" data-glyph="30S"><span class="glyph-text">30S</span></span>
+      <figure class="card-media"><span class="glyph glyph-art" data-glyph="30s"><span class="glyph-text">30s</span></span>
         <figcaption>Chorus found at 91.5 s in 凉凉 (it starts at 90.3 s)</figcaption></figure>
     </article>
 
@@ -207,6 +200,7 @@ villager-sound serve                 # web app</code></pre>
   </section>
 
   <section class="cta" aria-labelledby="cta-title">
+    <canvas class="ground" id="ground" aria-hidden="true"></canvas>
     <h2 id="cta-title">Make the villagers sing.</h2>
     <div class="actions">
       <a class="button button-primary" href="https://github.com/kenny2077/villager-sound">Get it on GitHub <span aria-hidden="true">↗</span></a>
