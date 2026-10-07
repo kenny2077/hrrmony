@@ -15,6 +15,7 @@ HIGHPASS_HZ = 120.0
 SHELF_HZ = 5000.0
 SHELF_DB = -8.0
 VOCAL_DB = -3.9
+MAX_OVER_SINGER_DB = 3.0  # never louder than the original singer + this
 
 
 def vocal_eq(y: np.ndarray, sr: int = SAMPLE_RATE) -> np.ndarray:
@@ -41,15 +42,25 @@ def fades(n: int, fade_in: float = 0.3, fade_out: float = 1.5, sr: int = SAMPLE_
     return env
 
 
-def mix(vocal: np.ndarray, instrumental: np.ndarray, vocal_db: float = VOCAL_DB) -> np.ndarray:
-    """Centre the (mono) villager vocal `vocal_db` dB relative to the instrumental's level."""
+def mix(vocal: np.ndarray, instrumental: np.ndarray, vocal_db: float = VOCAL_DB,
+        reference_vocal: np.ndarray | None = None) -> np.ndarray:
+    """Centre the (mono) villager vocal `vocal_db` dB relative to the instrumental's level.
+
+    With `reference_vocal` (the separated original vocal) the gain is capped so the villager is
+    never more than MAX_OVER_SINGER_DB above the original singer: near-instrumental tracks stay
+    near-instrumental instead of having separation residue blown up.
+    """
     n = min(len(vocal), len(instrumental))
     v, inst = vocal[:n], instrumental[:n]
     if inst.ndim == 1:
         inst = np.stack([inst, inst], axis=1)
-    level = rms(inst)
-    if level > 0 and rms(v) > 0:
-        v = v * (level / rms(v)) * 10 ** (vocal_db / 20)
+    level, own = rms(inst), rms(v)
+    if level > 0 and own > 0:
+        gain = (level / own) * 10 ** (vocal_db / 20)
+        if reference_vocal is not None:
+            singer = rms(reference_vocal[:n])
+            gain = min(gain, singer * 10 ** (MAX_OVER_SINGER_DB / 20) / own)
+        v = v * gain
     out = inst + v[:, None]
     peak = np.abs(out).max()
     return out / peak * 0.9 if peak > 0 else out

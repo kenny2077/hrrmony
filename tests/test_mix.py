@@ -41,3 +41,15 @@ def test_mix_handles_mono_instrumental_and_length_mismatch():
 def test_fades():
     env = mix.fades(SR * 4)
     assert env[0] == 0 and env[-1] == 0 and env[SR * 2] == 1
+
+
+def test_villager_never_far_louder_than_the_original_singer():
+    """Near-instrumental track: separation residue must not be boosted to vocal level."""
+    inst = np.stack([tone(220, amp=0.5)] * 2, axis=1)
+    villager = tone(440, amp=0.5)
+    singer = tone(440, amp=0.001)            # almost no vocal in the original
+    out = mix.mix(villager, inst, vocal_db=-3.9, reference_vocal=singer)
+    spec = np.abs(np.fft.rfft(out[:, 0]))
+    f = np.fft.rfftfreq(len(out), 1 / SR)
+    ratio = 20 * np.log10(spec[np.argmin(abs(f - 440))] / spec[np.argmin(abs(f - 220))])
+    assert ratio < -40
