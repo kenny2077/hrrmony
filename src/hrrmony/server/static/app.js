@@ -69,8 +69,10 @@
       raf = requestAnimationFrame(step);
     }
     let analyser = null, buf = null;
+    const followed = new WeakSet();
     function follow(audio) {
-      if (reduceMotion) return;
+      if (reduceMotion || followed.has(audio)) return; // one analyser and one listener per element
+      followed.add(audio);
       if (!analyser) {
         const ac = new (window.AudioContext || window.webkitAudioContext)();
         const src = ac.createMediaElementSource(audio);
@@ -89,7 +91,10 @@
       };
       audio.addEventListener("play", () => requestAnimationFrame(tick));
     }
-    addEventListener("resize", () => { cancelAnimationFrame(raf); resize(); });
+    addEventListener("resize", () => {
+      cancelAnimationFrame(raf); resize();
+      if (ignite < 1 && !reduceMotion) igniteLoop(performance.now() - ignite * 1400); // resume fade-in
+    });
     resize();
     if (!reduceMotion) igniteLoop(performance.now());
     return { follow };
@@ -102,7 +107,7 @@
 
   /* ---------------------------------------------------------------- form */
   const form = $("#make"), fileIn = $("#file"), drop = $("#drop"), go = $("#go");
-  let file = null;
+  let file = null, running = false;
 
   function pick(f) {
     if (!f) return;
@@ -110,7 +115,7 @@
     drop.classList.add("has-file");
     $("#drop-main").textContent = f.name;
     $("#drop-sub").textContent = `${(f.size / 1048576).toFixed(1)} MB. Choose another file to replace it`;
-    go.disabled = false;
+    go.disabled = running; // one cover at a time from this page
   }
   fileIn.addEventListener("change", () => pick(fileIn.files[0]));
   drop.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fileIn.click(); } });
@@ -130,7 +135,7 @@
   cells.innerHTML = "<span></span>".repeat(40);
   let timer = 0, lastPayload = null;
 
-  form.addEventListener("submit", (e) => { e.preventDefault(); if (file) start(); });
+  form.addEventListener("submit", (e) => { e.preventDefault(); if (file && !running) start(); });
   $("#retry").addEventListener("click", () => lastPayload && start());
   $("#again").addEventListener("click", () => { stage.hidden = true; form.scrollIntoView({ behavior: "smooth", block: "center" }); });
 
@@ -140,6 +145,7 @@
     const body = new FormData();
     body.append("file", file); body.append("mode", mode); body.append("shift", shift);
     reset(mode);
+    running = true;
     stage.hidden = false;
     stage.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
     go.disabled = true;
@@ -161,14 +167,23 @@
     $("#result").hidden = true; $("#error").hidden = true;
   }
 
+  let misses = 0;
   function poll(id) {
     clearTimeout(timer);
-    fetch(`/api/jobs/${id}`).then((r) => r.json()).then((job) => {
+    fetch(`/api/jobs/${id}`).then(async (r) => {
+      if (r.status === 404) throw Object.assign(new Error("The server no longer knows this cover (it was probably restarted). Start it again."), { final: true });
+      if (!r.ok) throw new Error(`Server error ${r.status}`);
+      return r.json();
+    }).then((job) => {
+      misses = 0;
       render(job);
       if (job.status === "done") done(job);
       else if (job.status === "error") fail(job.error);
       else timer = setTimeout(() => poll(id), 800);
-    }).catch(() => { timer = setTimeout(() => poll(id), 2000); });
+    }).catch((err) => {
+      if (err.final || ++misses > 15) fail(err.final ? err.message : "Lost contact with the server.");
+      else timer = setTimeout(() => poll(id), 2000);
+    });
   }
 
   function render(job) {
@@ -183,6 +198,7 @@
   }
 
   function done(job) {
+    running = false;
     go.disabled = false;
     cells.classList.add("done");
     const r = job.result || {};
@@ -196,10 +212,14 @@
     $("#dl-mp3").href = job.files.cover; $("#dl-wav").href = job.files.cover_wav;
     $("#result").hidden = false;
     aurora.follow(cover);
-    [cover, orig].forEach((a) => a.addEventListener("play", () => [cover, orig].forEach((b) => b !== a && b.pause())));
+    if (!cover.dataset.linked) {  // pause the other player; wire once, not per cover
+      cover.dataset.linked = "1";
+      [cover, orig].forEach((a) => a.addEventListener("play", () => [cover, orig].forEach((b) => b !== a && b.pause())));
+    }
   }
 
   function fail(msg) {
+    running = false;
     go.disabled = !file;
     $("#stage-title").textContent = "Cover stopped";
     $("#stage-msg").textContent = "";
