@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+.venv*/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+.coverage
+# never commit audio or model weights
+*.mp3
+*.wav
+*.flac
+*.m4a
+*.ogg
+*.pth
+*.ckpt
+*.index
+*.onnx
+out/
+work/
+input/
+.DS_Store
