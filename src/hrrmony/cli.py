@@ -10,17 +10,22 @@ import sys
 from pathlib import Path
 
 from . import __version__
-from .config import DEFAULT_SHIFT, SHIFT_PRESETS, VOICES, home
+from .config import DEFAULT_SHIFT, DEFAULT_VOICE, VOICES, home, parse_shift
+from .mix import VOCAL_DB
 
 
 def _shift(value: str) -> int:
-    if value in SHIFT_PRESETS:
-        return SHIFT_PRESETS[value]
     try:
-        return int(value)
-    except ValueError:
-        raise argparse.ArgumentTypeError(
-            f"expected semitones or one of {', '.join(SHIFT_PRESETS)}") from None
+        return parse_shift(value)
+    except ValueError as e:
+        raise argparse.ArgumentTypeError(str(e)) from None
+
+
+def _seconds(value: str) -> float:
+    v = float(value)
+    if v <= 0:
+        raise argparse.ArgumentTypeError("must be greater than 0")
+    return v
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -38,12 +43,12 @@ def build_parser() -> argparse.ArgumentParser:
     g.add_argument("--full", dest="mode", action="store_const", const="full",
                    help="the entire song")
     c.set_defaults(mode="hook")
-    c.add_argument("-d", "--duration", type=float, default=30.0, help="hook length in seconds")
+    c.add_argument("-d", "--duration", type=_seconds, default=30.0, help="hook length in seconds")
     c.add_argument("-s", "--start", type=float, help="hook start in seconds (skip auto-detect)")
     c.add_argument("--shift", type=_shift, default=DEFAULT_SHIFT,
                    help="semitones, or 'classic' (-8, default) / 'in-key' (-12)")
-    c.add_argument("--voice", default="villager", choices=sorted(VOICES))
-    c.add_argument("--vocal-db", type=float, default=-3.9, help="vocal level vs instrumental")
+    c.add_argument("--voice", default=DEFAULT_VOICE, choices=sorted(VOICES))
+    c.add_argument("--vocal-db", type=float, default=VOCAL_DB, help="vocal level vs instrumental")
     c.add_argument("--loudness", type=float, default=-16.0, help="target LUFS")
     c.add_argument("-o", "--output", type=Path, default=Path("."), help="output directory")
     c.add_argument("--format", dest="formats", action="append", choices=["mp3", "wav"],
@@ -91,10 +96,20 @@ def cmd_serve(a: argparse.Namespace) -> int:
     except ImportError:
         print("The web app needs the 'web' extra: pip install 'hrrmony[web]'", file=sys.stderr)
         return 1
-    from .server.app import create_app
+    import os
 
+    from .server.app import LOOPBACK_HOSTS, create_app
+
+    if a.host in LOOPBACK_HOSTS:
+        allowed = LOOPBACK_HOSTS
+    else:
+        env = os.environ.get("HRRMONY_ALLOWED_HOSTS", "")
+        allowed = frozenset(h.strip().lower() for h in env.split(",") if h.strip()) or None
+        print(f"warning: listening on {a.host}. The web app has no login; anyone who can reach this "
+              "port can upload songs and use your GPU. Put it behind an authenticating proxy.",
+              file=sys.stderr)
     print(f"hrrmony {__version__} → http://{a.host}:{a.port}")
-    uvicorn.run(create_app(), host=a.host, port=a.port, log_level="warning")
+    uvicorn.run(create_app(allowed_hosts=allowed), host=a.host, port=a.port, log_level="warning")
     return 0
 
 

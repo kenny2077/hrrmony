@@ -45,3 +45,10 @@ def test_version(capsys):
 def test_voices_lists_villager(capsys):
     assert main(["voices"]) == 0
     assert "villager" in capsys.readouterr().out
+
+
+def test_shift_and_duration_bounds():
+    with pytest.raises(SystemExit):
+        parse("cover", "x.wav", "--shift", "60")
+    with pytest.raises(SystemExit):
+        parse("cover", "x.wav", "--duration", "0")
