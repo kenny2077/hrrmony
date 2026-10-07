@@ -1,0 +1,97 @@
+{
+ "theirs_full": {
+  "bursts_per_min": 42.735849056603776,
+  "nearest": {
+   "villager__hit": 0.52,
+   "villager__yes": 0.31,
+   "damage__hit": 0.11,
+   "villager__death": 0.01,
+   "wandering_trader__hurt": 0.01
+  }
+ },
+ "theirs_excerpt": {
+  "bursts_per_min": 36.774193548387096,
+  "nearest": {
+   "villager__hit": 0.58,
+   "villager__yes": 0.16,
+   "damage__hit": 0.16,
+   "zombie_villager__hurt": 0.05,
+   "villager__death": 0.05
+  }
+ },
+ "rick_excerpt": {
+  "bursts_per_min": 17.419354838709676,
+  "nearest": {
+   "damage__hit": 0.78,
+   "illusion_illager__death": 0.11,
+   "zombie_villager__hurt": 0.11
+  }
+ },
+ "rvc/A_popular_-8.wav": {
+  "bursts_per_min": 75.48387096774192,
+  "nearest": {
+   "villager__hit": 0.74,
+   "evocation_illager__fangs": 0.1,
+   "villager__yes": 0.08,
+   "damage__hit": 0.05,
+   "pillager__death": 0.03
+  }
+ },
+ "rvc/B_reconnect_-8.wav": {
+  "bursts_per_min": 40.64516129032258,
+  "nearest": {
+   "villager__yes": 0.57,
+   "villager__hit": 0.43
+  }
+ },
+ "rvc/C_kimjisoo_-8.wav": {
+  "bursts_per_min": 38.70967741935483,
+  "nearest": {
+   "villager__hit": 0.55,
+   "villager__yes": 0.25,
+   "evocation_illager__fangs": 0.2
+  }
+ },
+ "rvc/D_blocktoast1000e_-8.wav": {
+  "bursts_per_min": 58.06451612903225,
+  "nearest": {
+   "villager__hit": 0.53,
+   "damage__hit": 0.23,
+   "evocation_illager__fangs": 0.2,
+   "evocation_illager__hurt": 0.03
+  }
+ },
+ "rvc_fullvox/A_popular_-8.wav": {
+  "bursts_per_min": 75.48387096774192,
+  "nearest": {
+   "villager__hit": 0.77,
+   "evocation_illager__fangs": 0.08,
+   "villager__death": 0.08,
+   "wandering_trader__death": 0.03,
+   "villager__yes": 0.03
+  }
+ },
+ "rvc_fullvox/B_reconnect_-8.wav": {
+  "bursts_per_min": 44.51612903225806,
+  "nearest": {
+   "villager__hit": 0.57,
+   "villager__yes": 0.43
+  }
+ },
+ "rvc_fullvox/C_kimjisoo_-8.wav": {
+  "bursts_per_min": 38.70967741935483,
+  "nearest": {
+   "villager__hit": 0.65,
+   "villager__yes": 0.2,
+   "evocation_illager__fangs": 0.15
+  }
+ },
+ "rvc_fullvox/D_blocktoast1000e_-8.wav": {
+  "bursts_per_min": 52.258064516129025,
+  "nearest": {
+   "villager__hit": 0.41,
+   "evocation_illager__fangs": 0.33,
+   "damage__hit": 0.26
+  }
+ }
+}

@@ -1,0 +1,743 @@
+{
+ "CONTROL (known 1 sample/syllable, -8 st)": {
+  "n_syllables": 50,
+  "id_cost_median": 1.272385241105458,
+  "id_margin_median": 0.3760684074366315,
+  "frac_margin_gt_10pct": 0.72,
+  "reuse_nn_cost_median": 1.4488630521289783,
+  "best_clip_hist": {
+   "zombie_villager__say3": 5,
+   "villager__no3": 3,
+   "villager__idle3": 3,
+   "wandering_trader__yes3": 2,
+   "villager__idle1": 2,
+   "illusion_illager__idle3": 2
+  },
+  "control_top1": 0.76,
+  "control_top3": 0.86,
+  "control_n": 50,
+  "chance_top1": 0.011363636363636364
+ },
+ "theirs": {
+  "n_syllables": 50,
+  "id_cost_median": 1.981506890053168,
+  "id_margin_median": 0.04012518843584044,
+  "frac_margin_gt_10pct": 0.1,
+  "reuse_nn_cost_median": 1.4457653349935167,
+  "best_clip_hist": {
+   "evocation_illager__idle3": 20,
+   "wandering_trader__idle1": 7,
+   "villager__haggle1": 5,
+   "villager__no1": 5,
+   "vindication_illager__idle3": 2,
+   "wandering_trader__idle2": 2
+  }
+ },
+ "theirs_per_syllable": [
+  {
+   "t": 29.5,
+   "best": "wandering_trader__idle2",
+   "label": "entity.wandering_trader.ambient",
+   "cost": 2.1,
+   "margin": 0.001,
+   "top3": [
+    "wandering_trader__idle2",
+    "wandering_trader__yes3",
+    "evocation_illager__idle1"
+   ]
+  },
+  {
+   "t": 31.21,
+   "best": "wandering_trader__idle1",
+   "label": "entity.wandering_trader.ambient",
+   "cost": 2.22,
+   "margin": 0.084,
+   "top3": [
+    "wandering_trader__idle1",
+    "wandering_trader__yes2",
+    "wandering_trader__idle5"
+   ]
+  },
+  {
+   "t": 32.03,
+   "best": "villager__no1",
+   "label": "entity.villager.no",
+   "cost": 1.96,
+   "margin": 0.011,
+   "top3": [
+    "villager__no1",
+    "evocation_illager__idle3",
+    "vindication_illager__idle3"
+   ]
+  },
+  {
+   "t": 32.27,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 1.89,
+   "margin": 0.06,
+   "top3": [
+    "evocation_illager__idle3",
+    "evocation_illager__idle4",
+    "evocation_illager__idle1"
+   ]
+  },
+  {
+   "t": 32.53,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 2.08,
+   "margin": 0.003,
+   "top3": [
+    "evocation_illager__idle3",
+    "wandering_trader__yes3",
+    "evocation_illager__idle4"
+   ]
+  },
+  {
+   "t": 33.09,
+   "best": "villager__haggle1",
+   "label": "entity.villager.trade",
+   "cost": 2.06,
+   "margin": 0.025,
+   "top3": [
+    "villager__haggle1",
+    "vindication_illager__idle3",
+    "vindication_illager__hurt3"
+   ]
+  },
+  {
+   "t": 33.88,
+   "best": "villager__no1",
+   "label": "entity.villager.no",
+   "cost": 2.03,
+   "margin": 0.0,
+   "top3": [
+    "villager__no1",
+    "villager__no2",
+    "villager__no3"
+   ]
+  },
+  {
+   "t": 34.16,
+   "best": "wandering_trader__idle1",
+   "label": "entity.wandering_trader.ambient",
+   "cost": 1.86,
+   "margin": 0.023,
+   "top3": [
+    "wandering_trader__idle1",
+    "villager__haggle1",
+    "wandering_trader__hurt4"
+   ]
+  },
+  {
+   "t": 35.2,
+   "best": "vindication_illager__idle3",
+   "label": "entity.vindication_illager.ambient",
+   "cost": 1.7,
+   "margin": 0.038,
+   "top3": [
+    "vindication_illager__idle3",
+    "vindication_illager__hurt3",
+    "pillager__death2"
+   ]
+  },
+  {
+   "t": 36.5,
+   "best": "zombie_villager__hurt1",
+   "label": "entity.zombie_villager.hurt",
+   "cost": 2.31,
+   "margin": 0.008,
+   "top3": [
+    "zombie_villager__hurt1",
+    "villager__no1",
+    "villager__yes2"
+   ]
+  },
+  {
+   "t": 36.77,
+   "best": "wandering_trader__idle1",
+   "label": "entity.wandering_trader.ambient",
+   "cost": 2.04,
+   "margin": 0.003,
+   "top3": [
+    "wandering_trader__idle1",
+    "evocation_illager__idle3",
+    "wandering_trader__yes3"
+   ]
+  },
+  {
+   "t": 37.28,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 2.12,
+   "margin": 0.007,
+   "top3": [
+    "evocation_illager__idle3",
+    "villager__haggle3",
+    "vindication_illager__hurt3"
+   ]
+  },
+  {
+   "t": 37.77,
+   "best": "villager__haggle1",
+   "label": "entity.villager.trade",
+   "cost": 2.04,
+   "margin": 0.094,
+   "top3": [
+    "villager__haggle1",
+    "villager__haggle3",
+    "evocation_illager__idle3"
+   ]
+  },
+  {
+   "t": 38.34,
+   "best": "wandering_trader__idle1",
+   "label": "entity.wandering_trader.ambient",
+   "cost": 2.1,
+   "margin": 0.014,
+   "top3": [
+    "wandering_trader__idle1",
+    "evocation_illager__idle3",
+    "wandering_trader__yes3"
+   ]
+  },
+  {
+   "t": 40.45,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 1.9,
+   "margin": 0.079,
+   "top3": [
+    "evocation_illager__idle3",
+    "vindication_illager__idle3",
+    "evocation_illager__idle4"
+   ]
+  },
+  {
+   "t": 40.98,
+   "best": "villager__idle1",
+   "label": "entity.villager.ambient",
+   "cost": 1.98,
+   "margin": 0.002,
+   "top3": [
+    "villager__idle1",
+    "evocation_illager__idle3",
+    "villager__no1"
+   ]
+  },
+  {
+   "t": 41.25,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 1.69,
+   "margin": 0.172,
+   "top3": [
+    "evocation_illager__idle3",
+    "pillager__death2",
+    "evocation_illager__idle4"
+   ]
+  },
+  {
+   "t": 41.79,
+   "best": "villager__yes2",
+   "label": "entity.villager.yes",
+   "cost": 2.17,
+   "margin": 0.112,
+   "top3": [
+    "villager__yes2",
+    "villager__haggle3",
+    "pillager__death2"
+   ]
+  },
+  {
+   "t": 42.87,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 2.1,
+   "margin": 0.042,
+   "top3": [
+    "evocation_illager__idle3",
+    "pillager__death1",
+    "pillager__idle4"
+   ]
+  },
+  {
+   "t": 43.12,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 1.83,
+   "margin": 0.06,
+   "top3": [
+    "evocation_illager__idle3",
+    "wandering_trader__yes3",
+    "wandering_trader__idle1"
+   ]
+  },
+  {
+   "t": 43.36,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 1.73,
+   "margin": 0.182,
+   "top3": [
+    "evocation_illager__idle3",
+    "wandering_trader__yes3",
+    "evocation_illager__idle1"
+   ]
+  },
+  {
+   "t": 43.62,
+   "best": "villager__no1",
+   "label": "entity.villager.no",
+   "cost": 2.08,
+   "margin": 0.089,
+   "top3": [
+    "villager__no1",
+    "villager__yes3",
+    "villager__idle2"
+   ]
+  },
+  {
+   "t": 44.01,
+   "best": "villager__haggle1",
+   "label": "entity.villager.trade",
+   "cost": 2.17,
+   "margin": 0.045,
+   "top3": [
+    "villager__haggle1",
+    "pillager__death2",
+    "villager__haggle3"
+   ]
+  },
+  {
+   "t": 45.21,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 1.94,
+   "margin": 0.004,
+   "top3": [
+    "evocation_illager__idle3",
+    "wandering_trader__idle1",
+    "wandering_trader__yes2"
+   ]
+  },
+  {
+   "t": 45.46,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 2.18,
+   "margin": 0.059,
+   "top3": [
+    "evocation_illager__idle3",
+    "evocation_illager__idle4",
+    "villager__haggle1"
+   ]
+  },
+  {
+   "t": 46.05,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 2.15,
+   "margin": 0.062,
+   "top3": [
+    "evocation_illager__idle3",
+    "evocation_illager__hurt2",
+    "villager__yes3"
+   ]
+  },
+  {
+   "t": 46.52,
+   "best": "vindication_illager__idle3",
+   "label": "entity.vindication_illager.ambient",
+   "cost": 1.88,
+   "margin": 0.007,
+   "top3": [
+    "vindication_illager__idle3",
+    "evocation_illager__idle3",
+    "evocation_illager__idle4"
+   ]
+  },
+  {
+   "t": 47.34,
+   "best": "wandering_trader__idle3",
+   "label": "entity.wandering_trader.ambient",
+   "cost": 1.94,
+   "margin": 0.021,
+   "top3": [
+    "wandering_trader__idle3",
+    "wandering_trader__idle1",
+    "wandering_trader__yes2"
+   ]
+  },
+  {
+   "t": 47.58,
+   "best": "wandering_trader__idle3",
+   "label": "entity.wandering_trader.ambient",
+   "cost": 2.22,
+   "margin": 0.012,
+   "top3": [
+    "wandering_trader__idle3",
+    "wandering_trader__idle1",
+    "wandering_trader__yes4"
+   ]
+  },
+  {
+   "t": 47.86,
+   "best": "wandering_trader__idle1",
+   "label": "entity.wandering_trader.ambient",
+   "cost": 1.99,
+   "margin": 0.071,
+   "top3": [
+    "wandering_trader__idle1",
+    "evocation_illager__idle3",
+    "wandering_trader__haggle3"
+   ]
+  },
+  {
+   "t": 48.41,
+   "best": "villager__no1",
+   "label": "entity.villager.no",
+   "cost": 1.92,
+   "margin": 0.03,
+   "top3": [
+    "villager__no1",
+    "pillager__death2",
+    "villager__idle1"
+   ]
+  },
+  {
+   "t": 48.62,
+   "best": "wandering_trader__idle1",
+   "label": "entity.wandering_trader.ambient",
+   "cost": 1.98,
+   "margin": 0.049,
+   "top3": [
+    "wandering_trader__idle1",
+    "evocation_illager__idle3",
+    "wandering_trader__haggle3"
+   ]
+  },
+  {
+   "t": 49.16,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 1.81,
+   "margin": 0.105,
+   "top3": [
+    "evocation_illager__idle3",
+    "evocation_illager__idle4",
+    "evocation_illager__idle1"
+   ]
+  },
+  {
+   "t": 49.72,
+   "best": "villager__no1",
+   "label": "entity.villager.no",
+   "cost": 2.28,
+   "margin": 0.018,
+   "top3": [
+    "villager__no1",
+    "villager__yes2",
+    "villager__no2"
+   ]
+  },
+  {
+   "t": 50.42,
+   "best": "vindication_illager__hurt2",
+   "label": "entity.vindication_illager.hurt",
+   "cost": 1.95,
+   "margin": 0.012,
+   "top3": [
+    "vindication_illager__hurt2",
+    "vindication_illager__hurt3",
+    "wandering_trader__hurt4"
+   ]
+  },
+  {
+   "t": 51.52,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 1.83,
+   "margin": 0.059,
+   "top3": [
+    "evocation_illager__idle3",
+    "pillager__idle4",
+    "wandering_trader__yes3"
+   ]
+  },
+  {
+   "t": 51.8,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 1.81,
+   "margin": 0.101,
+   "top3": [
+    "evocation_illager__idle3",
+    "wandering_trader__idle1",
+    "wandering_trader__yes3"
+   ]
+  },
+  {
+   "t": 52.08,
+   "best": "villager__hit2",
+   "label": "entity.villager.hurt",
+   "cost": 2.09,
+   "margin": 0.091,
+   "top3": [
+    "villager__hit2",
+    "villager__hit3",
+    "villager__yes3"
+   ]
+  },
+  {
+   "t": 52.47,
+   "best": "evocation_illager__hurt2",
+   "label": "entity.evocation_illager.hurt",
+   "cost": 2.16,
+   "margin": 0.024,
+   "top3": [
+    "evocation_illager__hurt2",
+    "villager__yes3",
+    "pillager__death2"
+   ]
+  },
+  {
+   "t": 52.85,
+   "best": "villager__haggle1",
+   "label": "entity.villager.trade",
+   "cost": 1.99,
+   "margin": 0.045,
+   "top3": [
+    "villager__haggle1",
+    "villager__yes3",
+    "vindication_illager__hurt3"
+   ]
+  },
+  {
+   "t": 53.7,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 1.74,
+   "margin": 0.091,
+   "top3": [
+    "evocation_illager__idle3",
+    "wandering_trader__yes3",
+    "vindication_illager__idle3"
+   ]
+  },
+  {
+   "t": 53.91,
+   "best": "villager__yes3",
+   "label": "entity.villager.yes",
+   "cost": 2.32,
+   "margin": 0.033,
+   "top3": [
+    "villager__yes3",
+    "villager__death",
+    "villager__yes2"
+   ]
+  },
+  {
+   "t": 54.75,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 1.74,
+   "margin": 0.02,
+   "top3": [
+    "evocation_illager__idle3",
+    "vindication_illager__idle3",
+    "villager__haggle1"
+   ]
+  },
+  {
+   "t": 54.95,
+   "best": "wandering_trader__idle2",
+   "label": "entity.wandering_trader.ambient",
+   "cost": 1.9,
+   "margin": 0.007,
+   "top3": [
+    "wandering_trader__idle2",
+    "wandering_trader__idle1",
+    "vindication_illager__idle3"
+   ]
+  },
+  {
+   "t": 55.9,
+   "best": "villager__haggle1",
+   "label": "entity.villager.trade",
+   "cost": 2.26,
+   "margin": 0.036,
+   "top3": [
+    "villager__haggle1",
+    "vindication_illager__idle3",
+    "pillager__death2"
+   ]
+  },
+  {
+   "t": 57.08,
+   "best": "wandering_trader__idle1",
+   "label": "entity.wandering_trader.ambient",
+   "cost": 1.75,
+   "margin": 0.053,
+   "top3": [
+    "wandering_trader__idle1",
+    "wandering_trader__idle2",
+    "wandering_trader__yes3"
+   ]
+  },
+  {
+   "t": 58.14,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 1.9,
+   "margin": 0.097,
+   "top3": [
+    "evocation_illager__idle3",
+    "vindication_illager__idle3",
+    "evocation_illager__idle1"
+   ]
+  },
+  {
+   "t": 58.42,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 1.85,
+   "margin": 0.088,
+   "top3": [
+    "evocation_illager__idle3",
+    "villager__yes3",
+    "vindication_illager__idle3"
+   ]
+  },
+  {
+   "t": 58.91,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 2.06,
+   "margin": 0.008,
+   "top3": [
+    "evocation_illager__idle3",
+    "wandering_trader__hurt4",
+    "vindication_illager__hurt1"
+   ]
+  },
+  {
+   "t": 59.55,
+   "best": "evocation_illager__idle3",
+   "label": "entity.evocation_illager.ambient",
+   "cost": 1.88,
+   "margin": 0.05,
+   "top3": [
+    "evocation_illager__idle3",
+    "vindication_illager__idle3",
+    "vindication_illager__idle5"
+   ]
+  }
+ ],
+ "rick_lead": {
+  "n_syllables": 13,
+  "id_cost_median": 2.067999150383518,
+  "id_margin_median": 0.01632687423904212,
+  "frac_margin_gt_10pct": 0.07692307692307693,
+  "reuse_nn_cost_median": 1.834681626189479,
+  "best_clip_hist": {
+   "evocation_illager__idle3": 3,
+   "pillager__death2": 3,
+   "wandering_trader__idle1": 2,
+   "wandering_trader__yes4": 2,
+   "wandering_trader__idle3": 1,
+   "vindication_illager__hurt3": 1
+  }
+ },
+ "ours_v3": {
+  "n_syllables": 46,
+  "id_cost_median": 1.8705914866371338,
+  "id_margin_median": 0.03944587404430576,
+  "frac_margin_gt_10pct": 0.13043478260869565,
+  "reuse_nn_cost_median": 0.6275318260974296,
+  "best_clip_hist": {
+   "evocation_illager__idle3": 22,
+   "vindication_illager__idle3": 9,
+   "vindication_illager__hurt3": 3,
+   "pillager__death2": 3,
+   "wandering_trader__yes3": 2,
+   "villager__yes1": 2
+  }
+ },
+ "ours_v4": {
+  "n_syllables": 47,
+  "id_cost_median": 1.90005861286742,
+  "id_margin_median": 0.0507544320111332,
+  "frac_margin_gt_10pct": 0.0851063829787234,
+  "reuse_nn_cost_median": 0.6593866040839657,
+  "best_clip_hist": {
+   "evocation_illager__idle3": 19,
+   "vindication_illager__idle3": 8,
+   "wandering_trader__idle1": 7,
+   "villager__yes3": 3,
+   "pillager__death2": 3,
+   "vindication_illager__hurt3": 2
+  }
+ },
+ "rvc:A_popular_-12": {
+  "n_syllables": 47,
+  "id_cost_median": 1.6787367204262615,
+  "id_margin_median": 0.031896660690447255,
+  "frac_margin_gt_10pct": 0.06382978723404255,
+  "reuse_nn_cost_median": 0.7964102767550052,
+  "best_clip_hist": {
+   "evocation_illager__idle3": 19,
+   "villager__haggle1": 10,
+   "pillager__death2": 4,
+   "wandering_trader__yes3": 3,
+   "pillager__idle4": 2,
+   "vindication_illager__hurt3": 2
+  }
+ },
+ "rvc:A_popular_-8": {
+  "n_syllables": 48,
+  "id_cost_median": 1.7369797860018774,
+  "id_margin_median": 0.03259610939838958,
+  "frac_margin_gt_10pct": 0.08333333333333333,
+  "reuse_nn_cost_median": 0.9669967175418434,
+  "best_clip_hist": {
+   "evocation_illager__idle3": 11,
+   "wandering_trader__yes3": 8,
+   "villager__haggle1": 7,
+   "vindication_illager__hurt3": 5,
+   "vindication_illager__idle3": 3,
+   "pillager__death2": 3
+  }
+ },
+ "rvc:B_reconnect_-12": {
+  "n_syllables": 21,
+  "id_cost_median": 1.513402882057978,
+  "id_margin_median": 0.02123640289420742,
+  "frac_margin_gt_10pct": 0.047619047619047616,
+  "reuse_nn_cost_median": 0.6771452654602296,
+  "best_clip_hist": {
+   "villager__haggle1": 5,
+   "vindication_illager__idle3": 4,
+   "pillager__death2": 4,
+   "evocation_illager__idle3": 2,
+   "villager__haggle3": 2,
+   "wandering_trader__idle2": 1
+  }
+ },
+ "rvc:B_reconnect_-8": {
+  "n_syllables": 29,
+  "id_cost_median": 1.6508822790419693,
+  "id_margin_median": 0.022848640083829214,
+  "frac_margin_gt_10pct": 0.034482758620689655,
+  "reuse_nn_cost_median": 0.7246820585701245,
+  "best_clip_hist": {
+   "villager__haggle1": 7,
+   "evocation_illager__idle3": 7,
+   "vindication_illager__idle3": 5,
+   "wandering_trader__idle1": 4,
+   "villager__haggle3": 3,
+   "evocation_illager__idle4": 1
+  }
+ }
+}

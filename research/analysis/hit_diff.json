@@ -1,0 +1,620 @@
+{
+ "vocal": {
+  "n_gap_gt_0_25": 647,
+  "n_gap_gt_0_4": 639,
+  "top": [
+   {
+    "t": 66.959,
+    "tpl": "villager__hit2",
+    "rate": 1.542,
+    "ncc": 0.782,
+    "orig_same_spot": 0.036,
+    "gap": 0.747
+   },
+   {
+    "t": 66.958,
+    "tpl": "villager__hit2",
+    "rate": 1.498,
+    "ncc": 0.774,
+    "orig_same_spot": 0.043,
+    "gap": 0.731
+   },
+   {
+    "t": 66.958,
+    "tpl": "villager__hit2",
+    "rate": 1.456,
+    "ncc": 0.76,
+    "orig_same_spot": 0.037,
+    "gap": 0.724
+   },
+   {
+    "t": 66.958,
+    "tpl": "villager__hit2",
+    "rate": 1.414,
+    "ncc": 0.754,
+    "orig_same_spot": 0.035,
+    "gap": 0.719
+   },
+   {
+    "t": 22.045,
+    "tpl": "villager__hit2",
+    "rate": 1.414,
+    "ncc": 0.724,
+    "orig_same_spot": 0.018,
+    "gap": 0.706
+   },
+   {
+    "t": 22.045,
+    "tpl": "villager__hit2",
+    "rate": 1.456,
+    "ncc": 0.728,
+    "orig_same_spot": 0.021,
+    "gap": 0.706
+   },
+   {
+    "t": 117.124,
+    "tpl": "villager__hit2",
+    "rate": 1.498,
+    "ncc": 0.746,
+    "orig_same_spot": 0.042,
+    "gap": 0.704
+   },
+   {
+    "t": 66.959,
+    "tpl": "villager__hit2",
+    "rate": 1.587,
+    "ncc": 0.761,
+    "orig_same_spot": 0.057,
+    "gap": 0.704
+   },
+   {
+    "t": 193.125,
+    "tpl": "villager__hit2",
+    "rate": 1.542,
+    "ncc": 0.756,
+    "orig_same_spot": 0.057,
+    "gap": 0.7
+   },
+   {
+    "t": 158.024,
+    "tpl": "villager__hit2",
+    "rate": 1.414,
+    "ncc": 0.72,
+    "orig_same_spot": 0.024,
+    "gap": 0.696
+   },
+   {
+    "t": 158.024,
+    "tpl": "villager__hit2",
+    "rate": 1.456,
+    "ncc": 0.725,
+    "orig_same_spot": 0.03,
+    "gap": 0.696
+   },
+   {
+    "t": 142.949,
+    "tpl": "villager__hit2",
+    "rate": 1.498,
+    "ncc": 0.73,
+    "orig_same_spot": 0.035,
+    "gap": 0.696
+   },
+   {
+    "t": 193.125,
+    "tpl": "villager__hit2",
+    "rate": 1.587,
+    "ncc": 0.745,
+    "orig_same_spot": 0.05,
+    "gap": 0.695
+   },
+   {
+    "t": 22.046,
+    "tpl": "villager__hit2",
+    "rate": 1.498,
+    "ncc": 0.719,
+    "orig_same_spot": 0.027,
+    "gap": 0.692
+   },
+   {
+    "t": 39.987,
+    "tpl": "villager__hit2",
+    "rate": 1.498,
+    "ncc": 0.719,
+    "orig_same_spot": 0.029,
+    "gap": 0.69
+   },
+   {
+    "t": 140.799,
+    "tpl": "villager__hit2",
+    "rate": 1.542,
+    "ncc": 0.718,
+    "orig_same_spot": 0.029,
+    "gap": 0.69
+   },
+   {
+    "t": 100.215,
+    "tpl": "villager__hit2",
+    "rate": 1.498,
+    "ncc": 0.725,
+    "orig_same_spot": 0.037,
+    "gap": 0.688
+   },
+   {
+    "t": 142.95,
+    "tpl": "villager__hit2",
+    "rate": 1.587,
+    "ncc": 0.724,
+    "orig_same_spot": 0.036,
+    "gap": 0.688
+   },
+   {
+    "t": 117.124,
+    "tpl": "villager__hit2",
+    "rate": 1.456,
+    "ncc": 0.719,
+    "orig_same_spot": 0.035,
+    "gap": 0.685
+   },
+   {
+    "t": 39.987,
+    "tpl": "villager__hit2",
+    "rate": 1.456,
+    "ncc": 0.711,
+    "orig_same_spot": 0.026,
+    "gap": 0.685
+   },
+   {
+    "t": 158.025,
+    "tpl": "villager__hit2",
+    "rate": 1.498,
+    "ncc": 0.725,
+    "orig_same_spot": 0.04,
+    "gap": 0.685
+   },
+   {
+    "t": 142.95,
+    "tpl": "villager__hit2",
+    "rate": 1.542,
+    "ncc": 0.729,
+    "orig_same_spot": 0.043,
+    "gap": 0.685
+   },
+   {
+    "t": 39.987,
+    "tpl": "villager__hit2",
+    "rate": 1.542,
+    "ncc": 0.722,
+    "orig_same_spot": 0.038,
+    "gap": 0.685
+   },
+   {
+    "t": 64.838,
+    "tpl": "villager__hit2",
+    "rate": 1.456,
+    "ncc": 0.72,
+    "orig_same_spot": 0.036,
+    "gap": 0.684
+   },
+   {
+    "t": 57.991,
+    "tpl": "villager__hit2",
+    "rate": 1.456,
+    "ncc": 0.724,
+    "orig_same_spot": 0.042,
+    "gap": 0.683
+   }
+  ]
+ },
+ "instrumental": {
+  "n_gap_gt_0_25": 1281,
+  "n_gap_gt_0_4": 1127,
+  "top": [
+   {
+    "t": 143.761,
+    "tpl": "villager__hit2",
+    "rate": 0.972,
+    "ncc": 0.846,
+    "orig_same_spot": 0.033,
+    "gap": 0.813
+   },
+   {
+    "t": 143.76,
+    "tpl": "villager__hit2",
+    "rate": 0.944,
+    "ncc": 0.846,
+    "orig_same_spot": 0.042,
+    "gap": 0.804
+   },
+   {
+    "t": 143.76,
+    "tpl": "villager__hit2",
+    "rate": 0.917,
+    "ncc": 0.841,
+    "orig_same_spot": 0.04,
+    "gap": 0.802
+   },
+   {
+    "t": 143.762,
+    "tpl": "villager__hit2",
+    "rate": 1.0,
+    "ncc": 0.836,
+    "orig_same_spot": 0.041,
+    "gap": 0.795
+   },
+   {
+    "t": 143.759,
+    "tpl": "villager__hit2",
+    "rate": 0.891,
+    "ncc": 0.827,
+    "orig_same_spot": 0.044,
+    "gap": 0.783
+   },
+   {
+    "t": 143.762,
+    "tpl": "villager__hit2",
+    "rate": 1.029,
+    "ncc": 0.813,
+    "orig_same_spot": 0.037,
+    "gap": 0.776
+   },
+   {
+    "t": 143.759,
+    "tpl": "villager__hit2",
+    "rate": 0.866,
+    "ncc": 0.808,
+    "orig_same_spot": 0.038,
+    "gap": 0.77
+   },
+   {
+    "t": 146.924,
+    "tpl": "villager__hit2",
+    "rate": 0.972,
+    "ncc": 0.804,
+    "orig_same_spot": 0.045,
+    "gap": 0.759
+   },
+   {
+    "t": 146.923,
+    "tpl": "villager__hit2",
+    "rate": 0.944,
+    "ncc": 0.8,
+    "orig_same_spot": 0.047,
+    "gap": 0.754
+   },
+   {
+    "t": 154.835,
+    "tpl": "villager__hit2",
+    "rate": 0.917,
+    "ncc": 0.791,
+    "orig_same_spot": 0.038,
+    "gap": 0.753
+   },
+   {
+    "t": 154.836,
+    "tpl": "villager__hit2",
+    "rate": 0.972,
+    "ncc": 0.791,
+    "orig_same_spot": 0.038,
+    "gap": 0.753
+   },
+   {
+    "t": 204.996,
+    "tpl": "villager__hit2",
+    "rate": 1.0,
+    "ncc": 0.835,
+    "orig_same_spot": 0.083,
+    "gap": 0.752
+   },
+   {
+    "t": 154.836,
+    "tpl": "villager__hit2",
+    "rate": 0.944,
+    "ncc": 0.79,
+    "orig_same_spot": 0.039,
+    "gap": 0.75
+   },
+   {
+    "t": 146.924,
+    "tpl": "villager__hit2",
+    "rate": 1.0,
+    "ncc": 0.799,
+    "orig_same_spot": 0.049,
+    "gap": 0.75
+   },
+   {
+    "t": 154.834,
+    "tpl": "villager__hit2",
+    "rate": 0.891,
+    "ncc": 0.782,
+    "orig_same_spot": 0.035,
+    "gap": 0.747
+   },
+   {
+    "t": 143.763,
+    "tpl": "villager__hit2",
+    "rate": 1.059,
+    "ncc": 0.786,
+    "orig_same_spot": 0.04,
+    "gap": 0.747
+   },
+   {
+    "t": 204.996,
+    "tpl": "villager__hit2",
+    "rate": 1.029,
+    "ncc": 0.825,
+    "orig_same_spot": 0.078,
+    "gap": 0.746
+   },
+   {
+    "t": 146.922,
+    "tpl": "villager__hit2",
+    "rate": 0.917,
+    "ncc": 0.789,
+    "orig_same_spot": 0.047,
+    "gap": 0.742
+   },
+   {
+    "t": 146.925,
+    "tpl": "villager__hit2",
+    "rate": 1.029,
+    "ncc": 0.782,
+    "orig_same_spot": 0.044,
+    "gap": 0.738
+   },
+   {
+    "t": 154.837,
+    "tpl": "villager__hit2",
+    "rate": 1.0,
+    "ncc": 0.776,
+    "orig_same_spot": 0.043,
+    "gap": 0.733
+   },
+   {
+    "t": 204.997,
+    "tpl": "villager__hit2",
+    "rate": 1.059,
+    "ncc": 0.809,
+    "orig_same_spot": 0.076,
+    "gap": 0.733
+   },
+   {
+    "t": 204.996,
+    "tpl": "villager__hit2",
+    "rate": 0.972,
+    "ncc": 0.835,
+    "orig_same_spot": 0.105,
+    "gap": 0.731
+   },
+   {
+    "t": 143.765,
+    "tpl": "entity__player__attack__weak1",
+    "rate": 1.029,
+    "ncc": 0.797,
+    "orig_same_spot": 0.068,
+    "gap": 0.729
+   },
+   {
+    "t": 164.876,
+    "tpl": "villager__hit2",
+    "rate": 0.972,
+    "ncc": 0.795,
+    "orig_same_spot": 0.067,
+    "gap": 0.728
+   },
+   {
+    "t": 143.758,
+    "tpl": "villager__hit2",
+    "rate": 0.841,
+    "ncc": 0.767,
+    "orig_same_spot": 0.04,
+    "gap": 0.727
+   }
+  ]
+ },
+ "mix": {
+  "n_gap_gt_0_25": 565,
+  "n_gap_gt_0_4": 535,
+  "top": [
+   {
+    "t": 154.836,
+    "tpl": "villager__hit2",
+    "rate": 0.972,
+    "ncc": 0.722,
+    "orig_same_spot": 0.028,
+    "gap": 0.694
+   },
+   {
+    "t": 154.837,
+    "tpl": "villager__hit2",
+    "rate": 1.0,
+    "ncc": 0.716,
+    "orig_same_spot": 0.025,
+    "gap": 0.691
+   },
+   {
+    "t": 154.834,
+    "tpl": "villager__hit2",
+    "rate": 0.891,
+    "ncc": 0.716,
+    "orig_same_spot": 0.026,
+    "gap": 0.69
+   },
+   {
+    "t": 154.835,
+    "tpl": "villager__hit2",
+    "rate": 0.917,
+    "ncc": 0.724,
+    "orig_same_spot": 0.042,
+    "gap": 0.683
+   },
+   {
+    "t": 154.836,
+    "tpl": "villager__hit2",
+    "rate": 0.944,
+    "ncc": 0.717,
+    "orig_same_spot": 0.036,
+    "gap": 0.681
+   },
+   {
+    "t": 164.875,
+    "tpl": "villager__hit2",
+    "rate": 0.944,
+    "ncc": 0.721,
+    "orig_same_spot": 0.042,
+    "gap": 0.679
+   },
+   {
+    "t": 142.176,
+    "tpl": "villager__hit2",
+    "rate": 0.917,
+    "ncc": 0.698,
+    "orig_same_spot": 0.021,
+    "gap": 0.677
+   },
+   {
+    "t": 142.177,
+    "tpl": "villager__hit2",
+    "rate": 0.944,
+    "ncc": 0.698,
+    "orig_same_spot": 0.022,
+    "gap": 0.676
+   },
+   {
+    "t": 142.177,
+    "tpl": "villager__hit2",
+    "rate": 0.972,
+    "ncc": 0.694,
+    "orig_same_spot": 0.021,
+    "gap": 0.673
+   },
+   {
+    "t": 164.876,
+    "tpl": "villager__hit2",
+    "rate": 0.972,
+    "ncc": 0.707,
+    "orig_same_spot": 0.037,
+    "gap": 0.67
+   },
+   {
+    "t": 142.176,
+    "tpl": "villager__hit2",
+    "rate": 0.891,
+    "ncc": 0.699,
+    "orig_same_spot": 0.029,
+    "gap": 0.669
+   },
+   {
+    "t": 154.834,
+    "tpl": "villager__hit2",
+    "rate": 0.866,
+    "ncc": 0.696,
+    "orig_same_spot": 0.028,
+    "gap": 0.667
+   },
+   {
+    "t": 142.178,
+    "tpl": "villager__hit2",
+    "rate": 1.0,
+    "ncc": 0.69,
+    "orig_same_spot": 0.024,
+    "gap": 0.666
+   },
+   {
+    "t": 154.837,
+    "tpl": "villager__hit2",
+    "rate": 1.029,
+    "ncc": 0.697,
+    "orig_same_spot": 0.033,
+    "gap": 0.664
+   },
+   {
+    "t": 133.211,
+    "tpl": "villager__hit2",
+    "rate": 1.0,
+    "ncc": 0.691,
+    "orig_same_spot": 0.028,
+    "gap": 0.663
+   },
+   {
+    "t": 133.211,
+    "tpl": "villager__hit2",
+    "rate": 1.029,
+    "ncc": 0.682,
+    "orig_same_spot": 0.028,
+    "gap": 0.654
+   },
+   {
+    "t": 142.178,
+    "tpl": "villager__hit2",
+    "rate": 1.029,
+    "ncc": 0.68,
+    "orig_same_spot": 0.028,
+    "gap": 0.653
+   },
+   {
+    "t": 154.838,
+    "tpl": "villager__hit2",
+    "rate": 1.059,
+    "ncc": 0.676,
+    "orig_same_spot": 0.023,
+    "gap": 0.653
+   },
+   {
+    "t": 133.21,
+    "tpl": "villager__hit2",
+    "rate": 0.944,
+    "ncc": 0.673,
+    "orig_same_spot": 0.023,
+    "gap": 0.65
+   },
+   {
+    "t": 133.214,
+    "tpl": "entity__player__attack__weak1",
+    "rate": 1.029,
+    "ncc": 0.687,
+    "orig_same_spot": 0.04,
+    "gap": 0.647
+   },
+   {
+    "t": 164.874,
+    "tpl": "villager__hit2",
+    "rate": 0.917,
+    "ncc": 0.694,
+    "orig_same_spot": 0.049,
+    "gap": 0.645
+   },
+   {
+    "t": 146.924,
+    "tpl": "villager__hit2",
+    "rate": 0.972,
+    "ncc": 0.673,
+    "orig_same_spot": 0.028,
+    "gap": 0.645
+   },
+   {
+    "t": 142.181,
+    "tpl": "entity__player__attack__weak1",
+    "rate": 1.091,
+    "ncc": 0.673,
+    "orig_same_spot": 0.028,
+    "gap": 0.645
+   },
+   {
+    "t": 164.876,
+    "tpl": "villager__hit2",
+    "rate": 1.0,
+    "ncc": 0.681,
+    "orig_same_spot": 0.039,
+    "gap": 0.643
+   },
+   {
+    "t": 133.214,
+    "tpl": "entity__player__attack__weak1",
+    "rate": 1.059,
+    "ncc": 0.683,
+    "orig_same_spot": 0.042,
+    "gap": 0.641
+   }
+  ]
+ }
+}

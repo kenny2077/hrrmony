@@ -1,0 +1,74 @@
+{
+ "instrumental": {
+  "sample_lag": 424,
+  "lag_ms": 9.61451247165533,
+  "wave_ncc": 0.8829893469810486,
+  "gain": 0.7907005548477173,
+  "mix_vs_mix_lag": 424,
+  "mix_vs_mix_ncc": 0.5387058258056641,
+  "logmel_corr": 0.9455666982678803,
+  "coherence_by_band": {
+   "30-150Hz": 0.8250148892402649,
+   "150-500Hz": 0.867382824420929,
+   "500-2000Hz": 0.6655170321464539,
+   "2000-6000Hz": 0.6067718863487244,
+   "6000-16000Hz": 0.24833276867866516
+  }
+ },
+ "rick_bleed": {
+  "resid_vs_rick_ncc": 0.06729941070079803,
+  "their_vocal_vs_rick_ncc": 0.025679685175418854,
+  "lag_ms": 9.61451247165533,
+  "note": "NCC of an independent signal is ~0.0x; same recording would be >0.3"
+ },
+ "levels": {
+  "their_vocal_to_instr_db": -3.900878068633799,
+  "orig_lead_to_instr_db": 0.5995472199370688,
+  "their_mix_rms_dbfs": -18.462300614564157,
+  "orig_mix_rms_dbfs": -16.00821622734243
+ },
+ "width_side_minus_mid_db": {
+  "their_mix": -10.831767082214355,
+  "orig_mix": -10.331281661987305,
+  "their_vocal": -32.60992431640625,
+  "rick_lead": -14.293050765991211,
+  "their_instr": -9.05087661743164,
+  "orig_instr": -8.509008407592773
+ },
+ "crest_db": {
+  "their_vocal": 22.438705444335938,
+  "rick_lead": 14.971724510192871
+ },
+ "decay_db_per_s_after_offsets": {
+  "their_vocal": [
+   98.07225981369032,
+   55
+  ],
+  "rick_lead": [
+   9.586035991388622,
+   14
+  ],
+  "ours_v3": [
+   112.63903237195639,
+   47
+  ],
+  "ours_v4": [
+   111.73372674231207,
+   55
+  ]
+ },
+ "lufs_I_LRA": {
+  "their_full": [
+   "-15.8",
+   "2.1"
+  ],
+  "orig_full": [
+   "-13.5",
+   "5.0"
+  ],
+  "ours_v4_cover": [
+   "-13.9",
+   "1.2"
+  ]
+ }
+}
