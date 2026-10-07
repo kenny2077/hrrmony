@@ -1,0 +1,19 @@
+services:
+  villager-sound:
+    build: .
+    image: villager-sound:latest
+    ports:
+      - "127.0.0.1:7860:7860"   # local only; the app has no authentication
+    volumes:
+      - villager-cache:/data     # models + jobs survive restarts
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  villager-cache:
