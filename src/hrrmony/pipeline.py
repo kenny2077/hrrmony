@@ -14,7 +14,7 @@ from typing import Literal
 import numpy as np
 
 from . import audio, mix, segment, separate, voice
-from .config import DEFAULT_SHIFT, DEFAULT_VOICE, SAMPLE_RATE, home
+from .config import DEFAULT_SHIFT, DEFAULT_VOICE, SAMPLE_RATE, SEPARATOR_MODEL, home
 
 log = logging.getLogger(__name__)
 
@@ -58,8 +58,10 @@ def _noop(stage: str, frac: float, msg: str) -> None:
     log.info("[%3.0f%%] %s: %s", frac * 100, stage, msg)
 
 
-def _workdir(src: Path, start: float, length: float) -> Path:
-    h = hashlib.sha1(f"{src.resolve()}|{src.stat().st_size}|{start:.2f}|{length:.2f}".encode())
+def _workdir(src: Path, start: float, length: float | None) -> Path:
+    st = src.stat()
+    key = f"{src.resolve()}|{st.st_size}|{st.st_mtime_ns}|{start:.2f}|{length}|{SEPARATOR_MODEL}"
+    h = hashlib.sha1(key.encode())
     d = home() / "work" / h.hexdigest()[:16]
     d.mkdir(parents=True, exist_ok=True)
     return d
@@ -92,10 +94,13 @@ def make_cover(song: str | Path, output_dir: str | Path = ".", options: CoverOpt
         pad_l = min(PAD, start)
     t["analyze"] = time.perf_counter() - t0
 
-    work = _workdir(src, start, length)
+    full_song = opts.mode == "full"
+    work = _workdir(src, start, None if full_song else length)
     clip = work / "clip.wav"
-    if not clip.exists():
-        audio.decode(src, clip, start - pad_l, length + pad_l + (PAD if opts.mode == "hook" else 0))
+    if not clip.exists():  # decode() writes atomically, so a present clip is a complete one
+        audio.decode(src, clip, start - pad_l, None if full_song else length + pad_l + PAD)
+    if full_song:
+        length = audio.duration(clip)
 
     t1 = time.perf_counter()
     say("separate", 0.15, "Separating vocals from the music")
@@ -112,13 +117,15 @@ def make_cover(song: str | Path, output_dir: str | Path = ".", options: CoverOpt
     t3 = time.perf_counter()
     say("master", 0.85, "Mixing and mastering")
     inst = audio.read(inst_p)
-    full = mix.mix(villager, inst, opts.vocal_db)
+    full = mix.mix(villager, inst, opts.vocal_db, reference_vocal=vocal)
+    n = len(full)  # mix() trims to the shorter of vocal/instrumental; keep every stem that long
+    villager, inst = villager[:n], inst[:n]
     a = int(pad_l * SAMPLE_RATE)
-    b = a + int(length * SAMPLE_RATE)
+    b = min(n, a + int(length * SAMPLE_RATE))
     cut, vox = full[a:b], villager[a:b]
     if opts.mode == "hook":
         env = mix.fades(len(cut))
-        cut, vox = cut * env[:, None], vox * env[: len(vox)]
+        cut, vox = cut * env[:, None], vox * env
     name = f"{src.stem}_villager" + (f"_{start:.0f}s" if opts.mode == "hook" else "")
     with tempfile.TemporaryDirectory() as td:
         pre = audio.write(Path(td) / "premaster.wav", cut)

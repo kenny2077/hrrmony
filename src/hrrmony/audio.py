@@ -35,16 +35,26 @@ def duration(path: str | Path) -> float:
 
 
 def decode(src: str | Path, dst: str | Path, start: float = 0.0, length: float | None = None) -> Path:
-    """Decode any input format to a 44.1 kHz stereo WAV, optionally cutting a window."""
+    """Decode any input format to a 44.1 kHz stereo WAV, optionally cutting a window.
+
+    Written to a temporary name and renamed, so an interrupted run never leaves a truncated file
+    that later runs would trust.
+    """
     require_ffmpeg()
+    dst = Path(dst)
+    tmp = dst.with_name(f".{dst.stem}.partial{dst.suffix}")
     cmd = ["ffmpeg", "-loglevel", "error", "-y"]
     if start > 0:
         cmd += ["-ss", f"{start:.3f}"]
     if length is not None:
         cmd += ["-t", f"{length:.3f}"]
-    cmd += ["-i", str(src), "-ac", "2", "-ar", str(SAMPLE_RATE), str(dst)]
-    subprocess.run(cmd, check=True)
-    return Path(dst)
+    cmd += ["-i", str(src), "-ac", "2", "-ar", str(SAMPLE_RATE), str(tmp)]
+    try:
+        subprocess.run(cmd, check=True)
+        tmp.replace(dst)
+    finally:
+        tmp.unlink(missing_ok=True)
+    return dst
 
 
 def read(path: str | Path, mono: bool = False) -> np.ndarray:
