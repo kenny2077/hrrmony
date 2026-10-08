@@ -34,7 +34,7 @@ Choruses are usually the loudest part of a pop song and the part whose harmony r
 ## Performance
 On an RTX 4050 laptop GPU (6 GB):
 - 30 s hook: about 25–30 s end to end
-- whole 3–4 min song: about 1 min
+- whole song: about 75 s for 4 min 23 s
 - first run only: about 1.2 GB of model downloads
 
 On CPU it works but runs several times slower.

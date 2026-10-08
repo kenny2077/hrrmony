@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/screenshot.jpg" alt="Hrrmony web app: upload a song, choose the best 30 seconds or the whole song, and get a Minecraft villager cover" width="100%">
+  <a href="https://kenny2077.github.io/hrrmony/"><img src="assets/site.jpg" alt="Hrrmony product page: a pixel Minecraft village at night under the headline Every song, sung by a villager" width="100%"></a>
 </p>
 
 <h1 align="center">Hrrmony</h1>
@@ -8,7 +8,7 @@
 <i>Hrrmony</i> = the villager's “hrmm” + harmony.<br>
 Drop in a track and get back a villager cover, made locally on your own machine: one “hrmm” per word, hit-sound consonants and all.</p>
 
-<p align="center"><a href="https://kenny2077.github.io/hrrmony/"><b>Product page and demo</b></a> &nbsp;|&nbsp; <a href="docs/how-it-works.md">How it works</a> &nbsp;|&nbsp; <a href="https://github.com/kenny2077/hrrmony/releases">Releases</a> &nbsp;|&nbsp; An <a href="https://auroraforgelab.com/">Aurora Forge Lab</a> product</p>
+<p align="center"><a href="https://kenny2077.github.io/hrrmony/#listen"><b>▶ Hear the demo</b></a> &nbsp;|&nbsp; <a href="https://kenny2077.github.io/hrrmony/">Product page</a> &nbsp;|&nbsp; <a href="docs/how-it-works.md">How it works</a> &nbsp;|&nbsp; <a href="https://github.com/kenny2077/hrrmony/releases">Releases</a> &nbsp;|&nbsp; An <a href="https://auroraforgelab.com/">Aurora Forge Lab</a> product</p>
 
 <p align="center">
   <a href="https://github.com/kenny2077/hrrmony/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/kenny2077/hrrmony/ci.yml?branch=main&style=for-the-badge&label=CI"></a>
@@ -27,12 +27,19 @@ Drop in a track and get back a villager cover, made locally on your own machine:
 <tr><td><b>Keeps the song recognisable</b></td><td>The original instrumental stays as it is. The villager follows the singer's own pitch, timing and phrasing.</td></tr>
 <tr><td><b>Web app and CLI</b></td><td>A local web app with live progress and side-by-side playback, or one command in a terminal or script.</td></tr>
 <tr><td><b>Fast on a laptop GPU</b></td><td>About 25 s for a 30-second cover on an RTX 4050. CPU works too, just slower.</td></tr>
-<tr><td><b>Private</b></td><td>Your music never leaves your machine. Models are downloaded once and cached.</td></tr>
+<tr><td><b>Private and offline</b></td><td>Your music never leaves your machine. Models are downloaded once, pinned to exact versions, and cached; after that it runs without internet.</td></tr>
 </table>
 
-## Quick install
+## Requirements
 
-You need Python 3.10–3.12 and [ffmpeg](docs/faq.md).
+| | Minimum | Tested |
+|---|---|---|
+| GPU | optional (CPU works, several times slower) | NVIDIA RTX 4050 Laptop, 6 GB |
+| RAM | 8 GB | 32 GB |
+| Disk | about 1.5 GB for models | |
+| Software | Python 3.10–3.12, [ffmpeg](docs/faq.md) | Ubuntu 22.04 (WSL2), Python 3.10, CUDA |
+
+## Quick install
 
 ```bash
 pip install "hrrmony[gpu,web] @ git+https://github.com/kenny2077/hrrmony"   # NVIDIA GPU
@@ -62,6 +69,12 @@ hrrmony doctor                                  # check ffmpeg, CUDA and the cac
 
 Each cover writes `<song>_villager_<start>s.mp3` and `.wav`, plus a loudness-matched `…_original.mp3` of the same excerpt for A/B listening.
 
+### Web app
+
+<img src="assets/screenshot.jpg" alt="Hrrmony web app: a song upload box with Best 30 seconds or Whole song, and Classic or In key pitch" width="100%">
+
+`hrrmony serve` starts a local web app. Drop in a song, choose the best 30 seconds or the whole song and the villager pitch, follow the progress live, then play the cover next to the original and download MP3 or WAV.
+
 ### From Python
 
 ```python
@@ -83,11 +96,16 @@ The popular villager covers turned out not to be villager clips pasted onto note
 
 [docs/how-it-works.md](docs/how-it-works.md) has every measurement behind the settings. [research/](research/) has the experiment log and the scripts.
 
-| Song (30 s hook) | Hook found | Time on RTX 4050 |
-|---|---|---|
-| 凉凉 | 91.5 s (chorus at 90.3 s) | 24 s |
-| Shape of You | 204.9 s (final chorus) | 28 s |
-| Never Gonna Give You Up (`--start 29.5`) | — | ~30 s |
+### Tested results (RTX 4050)
+
+| Input | Mode | Result | Time |
+|---|---|---|---|
+| Jingle Bells chorus (public domain, synthetic singer) | 30 s, `classic` and `in-key` | all 51 notes sung, 98% within 50 cents of the melody | 21 s / 10 s |
+| 凉凉 | 30 s, hook auto-found at 91.5 s (chorus starts at 90.3 s) | | 25 s |
+| Shape of You | `--full`, 4 min 23 s | the cover has the same length as the song | 75 s |
+| Never Gonna Give You Up | 30 s at 29.5 s | matches the reference AI cover: 50 vs 50 syllables, same hit-like consonant bursts | ~30 s |
+
+Copyrighted songs were used only for private testing. The public demo uses a public-domain melody.
 
 ## Documentation
 
@@ -97,6 +115,23 @@ The popular villager covers turned out not to be villager clips pasted onto note
 | [Configuration](docs/configuration.md) | CLI options, environment variables, cache layout |
 | [FAQ and troubleshooting](docs/faq.md) | ffmpeg, CUDA, model downloads, off-key results, rights |
 | [Research log](research/README.md) | Five iterations from pasted clips to voice conversion |
+
+## Security and privacy
+
+- **Pinned, non-executable models.** Every model download is pinned to an exact Hugging Face commit. The RVC and pitch checkpoints are loaded with `weights_only=True`, and the speech encoder is safetensors, so a tampered checkpoint can't run code.
+- **Local-only web app.** It binds to `127.0.0.1` by default, refuses foreign `Host` headers (DNS rebinding) and cross-origin posts, caps the queue at 8 covers, and deletes uploads after 24 hours.
+
+See [SECURITY.md](SECURITY.md) for how to report a problem.
+
+## Status and roadmap
+
+- **Verified end to end:** Linux and NVIDIA CUDA, for both the CLI and the web app (tests include a full GPU run).
+- **Not yet verified end to end:** the macOS and CPU-only paths, and the Docker image. Reports are welcome.
+- **Next:**
+  - more voices (wandering trader, illagers)
+  - an own-trained villager voice with a clear licence
+  - a learned song-structure model for picking the hook
+  - the Minecraft look of the product page brought to the web app
 
 ## Responsible use
 
