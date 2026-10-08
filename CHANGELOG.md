@@ -18,6 +18,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - Web UI: a 404 or 500 while polling now shows an error instead of polling forever. A second song can't be submitted while one is running. Players no longer stack event listeners after each cover. The background fade-in recovers after a resize.
 
 ### Changed
+- Product page: the demo is villager-only (the original-singer take and the voice switch are gone).
 - The vocal separator model is loaded once and reused across songs; it used to be reloaded for every web job.
 - Models that are already downloaded are used without contacting the Hub, so covers work offline.
 - The CLI and the web API share one shift parser, limited to ±24 semitones. `--duration` must be positive. The CLI defaults come from the library constants.

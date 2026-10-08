@@ -72,9 +72,8 @@
   <section class="listen" id="listen" aria-labelledby="listen-title">
     <header class="section-head">
       <p class="kicker">Listen <span>/ Public-domain demo</span></p>
-      <h2 id="listen-title">Same song. One villager.</h2>
-      <p class="sub">“Happy Birthday” with a synthetic singer, then the same take through Hrrmony.
-        Switch voices while it plays; the music keeps going.</p>
+      <h2 id="listen-title">Hear the villager sing.</h2>
+      <p class="sub">“Happy Birthday”, sung by a Minecraft villager. Made with Hrrmony from a public-domain melody.</p>
     </header>
 
     <div class="player glow" id="player">
@@ -83,15 +82,10 @@
         <button class="play" id="play" type="button" aria-label="Play">
           <svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><path class="i-play" d="M2 1h2v1h2v1h2v4H6v1H4v1H2z"/><path class="i-pause" d="M2 1h2v8H2zM6 1h2v8H6z"/></svg>
         </button>
-        <div class="ab" role="radiogroup" aria-label="Voice">
-          <label><input type="radio" name="voice" value="villager" checked><span>Villager</span></label>
-          <label><input type="radio" name="voice" value="original"><span>Original singer</span></label>
-        </div>
         <div class="seek" id="seek" role="slider" tabindex="0" aria-label="Position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="seek-fill"></i></div>
         <span class="time" id="time">0:00</span>
       </div>
       <audio id="a-villager" src="assets/demo-villager.mp3" preload="auto"></audio>
-      <audio id="a-original" src="assets/demo-original.mp3" preload="auto"></audio>
     </div>
   </section>
 

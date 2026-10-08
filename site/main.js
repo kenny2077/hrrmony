@@ -1,5 +1,5 @@
 /* Hrrmony product page: lamp-field sky, dot-matrix glyphs, scroll-lit statement,
-   A/B demo player. No dependencies. */
+   demo player. No dependencies. */
 (() => {
   "use strict";
   const $ = (s, r = document) => r.querySelector(s);
@@ -357,12 +357,12 @@
     addEventListener("scroll", update, { passive: true }); update();
   }
 
-  /* ---------------------------------------------------------------- A/B demo player */
+  /* ---------------------------------------------------------------- demo player */
   const player = $("#player");
   if (player) {
-    const A = { villager: $("#a-villager"), original: $("#a-original") };
+    const audio = $("#a-villager");
     const playBtn = $("#play"), seek = $("#seek"), fill = $("#seek-fill"), time = $("#time"), viz = $("#viz");
-    let current = "villager", actx = null, analyser = null, gains = {}, raf = 0;
+    let actx = null, analyser = null, raf = 0;
     const vctx = viz.getContext("2d");
     const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 
@@ -370,54 +370,34 @@
       if (actx) return;
       actx = new (window.AudioContext || window.webkitAudioContext)();
       analyser = actx.createAnalyser(); analyser.fftSize = 1024; analyser.smoothingTimeConstant = .78;
+      actx.createMediaElementSource(audio).connect(analyser);
       analyser.connect(actx.destination);
-      for (const [k, el] of Object.entries(A)) {
-        const src = actx.createMediaElementSource(el), g = actx.createGain();
-        g.gain.value = k === current ? 1 : 0;
-        src.connect(g); g.connect(analyser); gains[k] = g;
-      }
-    }
-    function setVoice(v) {
-      current = v;
-      if (gains.villager) for (const k in gains) gains[k].gain.setTargetAtTime(k === v ? 1 : 0, actx.currentTime, .03);
-      else for (const k in A) A[k].muted = k !== v;
-      player.dataset.voice = v;
     }
     async function play() {
       setupAudio();
       await actx.resume();
-      A.original.currentTime = A.villager.currentTime;
       // reflect the state immediately; playback may still be buffering
       player.classList.add("is-playing"); playBtn.setAttribute("aria-label", "Pause");
       tick();
-      const results = await Promise.allSettled(Object.values(A).map((a) => a.play()));
-      if (results.some((r) => r.status === "rejected")) pause();
+      try { await audio.play(); } catch { pause(); }
     }
     function pause() {
-      Object.values(A).forEach((a) => a.pause());
+      audio.pause();
       player.classList.remove("is-playing"); playBtn.setAttribute("aria-label", "Play");
     }
-    playBtn.addEventListener("click", () => (A.villager.paused ? play() : pause()));
-    $$('input[name="voice"]', player).forEach((r) => r.addEventListener("change", () => setVoice(r.value)));
-    A.villager.addEventListener("ended", () => { pause(); A.villager.currentTime = A.original.currentTime = 0; progress(); });
-    function seekTo(frac) {
-      const d = A.villager.duration || 0;
-      Object.values(A).forEach((a) => { a.currentTime = frac * d; });
-      progress();
-    }
+    playBtn.addEventListener("click", () => (audio.paused ? play() : pause()));
+    audio.addEventListener("ended", () => { pause(); audio.currentTime = 0; progress(); });
+    function seekTo(frac) { audio.currentTime = frac * (audio.duration || 0); progress(); }
     seek.addEventListener("click", (e) => { const r = seek.getBoundingClientRect(); seekTo((e.clientX - r.left) / r.width); });
     seek.addEventListener("keydown", (e) => {
-      const d = A.villager.duration || 1, step = 5 / d, cur = A.villager.currentTime / d;
+      const d = audio.duration || 1, step = 5 / d, cur = audio.currentTime / d;
       if (e.key === "ArrowRight") { seekTo(Math.min(1, cur + step)); e.preventDefault(); }
       if (e.key === "ArrowLeft") { seekTo(Math.max(0, cur - step)); e.preventDefault(); }
     });
     function progress() {
-      const d = A.villager.duration || 0, t = A.villager.currentTime;
-      const f = d ? t / d : 0;
+      const d = audio.duration || 0, t = audio.currentTime, f = d ? t / d : 0;
       fill.style.width = `${f * 100}%`; seek.setAttribute("aria-valuenow", Math.round(f * 100));
       time.textContent = fmt(t);
-      // keep the two takes locked together
-      if (!A.villager.paused && Math.abs(A.original.currentTime - t) > .08) A.original.currentTime = t;
     }
     // lamp-column spectrum (idle: a quiet resting row)
     const bins = new Uint8Array(512);
@@ -428,28 +408,24 @@
       vctx.clearRect(0, 0, r.width, r.height);
       const CELL = 12, SEAM = 3, cols = Math.floor(r.width / CELL), rows = Math.floor(r.height / CELL);
       if (analyser) analyser.getByteFrequencyData(bins);
-      const hot = current === "villager";
       for (let x = 0; x < cols; x++) {
         const b = Math.floor(Math.pow(x / cols, 1.7) * 220) + 2;
         const v = analyser ? bins[b] / 255 : 0;
         const h = Math.max(1, Math.round(v * rows));
         for (let y = 0; y < rows; y++) {
-          const on = rows - y <= h;
-          const top = rows - y === h && v > .05;
-          vctx.fillStyle = !on ? "rgba(150, 205, 245, .05)"
-            : top ? (hot ? "#ffb547" : "#eaf2f8")
-            : (hot ? `rgba(79, 227, 208, ${.35 + .65 * (rows - y) / rows})` : `rgba(147, 167, 187, ${.3 + .5 * (rows - y) / rows})`);
+          const on = rows - y <= h, top = rows - y === h && v > .05;
+          vctx.fillStyle = !on ? "rgba(150, 205, 245, .05)" : top ? "#ffb547"
+            : `rgba(79, 227, 208, ${.35 + .65 * (rows - y) / rows})`;
           vctx.fillRect(x * CELL, y * CELL, CELL - SEAM, CELL - SEAM);
         }
       }
     }
     function tick() {
       cancelAnimationFrame(raf);
-      const step = () => { progress(); drawViz(); if (!A.villager.paused) raf = requestAnimationFrame(step); else drawViz(); };
+      const step = () => { progress(); drawViz(); if (!audio.paused) raf = requestAnimationFrame(step); else drawViz(); };
       raf = requestAnimationFrame(step);
     }
-    A.villager.addEventListener("loadedmetadata", progress);
-    setVoice("villager");
+    audio.addEventListener("loadedmetadata", progress);
     drawViz(); addEventListener("resize", drawViz);
   }
 
