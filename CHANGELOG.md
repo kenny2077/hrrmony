@@ -3,6 +3,8 @@
 All notable changes to this project are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
+
+## [0.3.0] - 2026-10-07
 ### Security
 - Model downloads are pinned to exact Hugging Face commits: the villager RVC model, RMVPE, and the HuBERT encoder (safetensors, now fetched into the hrrmony cache).
 - The RVC and RMVPE checkpoints are loaded with `torch.load(weights_only=True)`, so a tampered pickle can't run code, even on torch older than 2.6.
@@ -18,6 +20,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - Web UI: a 404 or 500 while polling now shows an error instead of polling forever. A second song can't be submitted while one is running. Players no longer stack event listeners after each cover. The background fade-in recovers after a resize.
 
 ### Changed
+- README: product-page hero, a web-app section, requirements, tested results (including a public-domain Jingle Bells test), security notes and roadmap. New screenshots of the product page and the renamed web app.
 - Product page: the demo is villager-only (the original-singer take and the voice switch are gone).
 - The vocal separator model is loaded once and reused across songs; it used to be reloaded for every web job.
 - Models that are already downloaded are used without contacting the Hub, so covers work offline.
@@ -40,6 +43,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - Docker image (CUDA) and compose file.
 - Research log and the measurements behind the recipe (`research/`, `docs/how-it-works.md`).
 
-[Unreleased]: https://github.com/kenny2077/hrrmony/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/kenny2077/hrrmony/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/kenny2077/hrrmony/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/kenny2077/hrrmony/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/kenny2077/hrrmony/releases/tag/v0.1.0
